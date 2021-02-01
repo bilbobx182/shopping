@@ -47,5 +47,5 @@ class Tesco():
                                 brand = brand.replace("'","").replace("{","").replace("}","").strip()
 
                                 if('valid from') not in brand and "Lunch Meal Deal" not in brand:
-                                    return_list.append('INSERT into product values ({item},{brand},{data[1].strip()},{data[2].strip()});')
+                                    return_list.append(f'INSERT into product values ({item},{brand},{data[1].strip()},{data[2].strip()});')
         return return_list
