@@ -1,4 +1,4 @@
-from src.common import perform_request, generate_insert,cleanse
+from backend.src.common import perform_request, generate_insert
 
 
 class Tesco():

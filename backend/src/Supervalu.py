@@ -1,4 +1,4 @@
-from src.common import replace_ownbrand,remove_currency,generate_insert,perform_request
+from backend.src.common import replace_ownbrand,remove_currency,generate_insert,perform_request
 
 class Supervalu():
 

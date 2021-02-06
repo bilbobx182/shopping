@@ -1,7 +1,6 @@
-from src.Tesco import Tesco
-from src.Supervalu import Supervalu
-from src.database import DBConnector
-import json
+from backend.src.Tesco import Tesco
+from backend.src.Supervalu import Supervalu
+from backend.src.database import DBConnector
 from fastapi import FastAPI
 import uvicorn
 
