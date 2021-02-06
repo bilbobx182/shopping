@@ -1,10 +1,10 @@
-from src.common import perform_request, generate_insert
+from src.common import perform_request, generate_insert,cleanse
 
 
 class Tesco():
 
     def get_brand(self, product_information):
-        return str(product_information[0].split("SAVE")[0] if 'save' in data else {product_information[0]})
+        return str(product_information[0].split("SAVE")[0] if 'save' in product_information else {product_information[0]})
 
     def remove_suggestions(self, brand):
         return str(brand.split("Cheaper")[0] if "Cheaper alternatives" in brand else brand)
@@ -16,9 +16,10 @@ class Tesco():
         return (' '.join(data).replace("\n", "").replace("Add to basketQuantity", "")
                 .replace("Best Value for You", "").replace("                 ", ' ')
                 .replace("Delivering the freshest food to your door- Find out more >", "")
-                .replace("Tesco", "Own_Brand")
+                .replace("Tesco", "ownbrand")
                 .replace("(", "")
                 .replace(")", "")
+                .replace("'","")
                 .strip()).split("€")
 
     def _get_brand(self, data):
@@ -30,12 +31,12 @@ class Tesco():
     def __init__(self, compare_items):
         self._compare_items = compare_items
 
-    def get_data(self):
+    def get_tesco_products(self):
         return_list = []
         for catagory in self._compare_items:
             soup = perform_request(f"https://www.tesco.ie/groceries/product/search/default.aspx?searchBox={catagory}")
             for row in soup.find_all("div", {"class": "productLists"})[0].contents[0].contents:
-                split = row.text.split("\r")
+                split = row.text.replace("\'","").split("\r")
                 split.pop(1)
                 data = self.format_data(split)
 
