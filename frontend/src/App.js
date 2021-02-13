@@ -1,54 +1,70 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React from 'react';
+import './App.css';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 import axios from "axios";
-import Table from "./components/Table/Ciaran_Table"
+import {Button, TextField} from "@material-ui/core";
 
-//Based off of  https://blog.logrocket.com/complete-guide-building-smart-data-table-react/
 
-function App() {
-  const columns = useMemo(
-    () => [
-      {
-        // first group - TV Show
-        Header: "Products",
-        // First group columns
-        columns: [
-          {
-            Header: "Search",
-            accessor: "0"
-          },
-          {
-            Header: "Product",
-            accessor: "1"
-          },
-          {
-            Header: "Shop",
-            accessor: "2"
-          },
-          {
-            Header: "Price",
-            accessor: "3"
-          }
-        ]
-      },
-    ],
-    []
-  );
 
-  const [data, setData] = useState([]);
+class App extends React.Component {
 
-  // Using useEffect to call the API once mounted and set the data
-  useEffect(() => {
-    (async () => {
-      const result = await axios("http://localhost:8000/products/club orange");
-      setData(result.data);
-    })();
-  }, []);
 
-  return (
-    <div className="App">
-      <Table columns={columns} data={data} />
-    </div>
-  );
+    constructor(props) {
+        super(props);
+        this.state = {
+            search_query: '',
+            result_data: []
+        };
+    }
+
+    componentDidMount() {
+        this.perform_request('milk')
+        console.log(this.state.result_data)
+  }
+
+
+
+    perform_request(item) {
+        this.setState({apiFilter: item});
+        axios("http://localhost:8000/products/" + item).then(({data}) => {
+            this.setState({result_data: data })});}
+
+
+    render() {
+        return (
+            <div>
+                <TextField id="standard-basic" label="Standard"/>
+                <Button variant="contained">Search</Button>
+
+                <TableContainer component={Paper}>
+                    <Table aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="left">Item</TableCell>
+                                <TableCell align="left">Shop</TableCell>
+                                <TableCell align="left">Price</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {this.state.result_data.map((row) => (
+                                <TableRow key={row.name}>
+                                    <TableCell align="left">{row.description}</TableCell>
+                                    <TableCell align="left">{row.shop}</TableCell>
+                                    <TableCell align="left">{row.price}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </div>
+        );
+    }
 }
 
-export default App;
+export default (App);
