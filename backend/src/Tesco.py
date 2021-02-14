@@ -13,14 +13,15 @@ class Tesco():
         return str(brand.split(search)[0] if search in brand else brand)
 
     def format_data(self, data):
-        return (' '.join(data).replace("\n", "").replace("Add to basketQuantity", "")
-                .replace("Best Value for You", "").replace("                 ", ' ')
-                .replace("Delivering the freshest food to your door- Find out more >", "")
-                .replace("Tesco", "ownbrand")
-                .replace("(", "")
-                .replace(")", "")
-                .replace("'","")
-                .strip()).split("€")
+        return  (' '.join(data).replace("\n", "").replace("Add to basketQuantity", "")
+                    .replace("Best Value for You", "").replace("                 ", ' ')
+                    .replace("Delivering the freshest food to your door- Find out more >", "")
+                    .replace("Tesco", "ownbrand")
+                    .replace("Alcohol can only be delivered between 11am - 10pm Monday to Saturday.Alcohol can only be delivered between 1pm and 10pm on Sunday.","")
+                    .replace("(", "")
+                    .replace(")", "")
+                    .replace("'","")
+                    .strip()).split("€")
 
     def _get_brand(self, data):
         return self.remove_after_keyword(
@@ -40,8 +41,9 @@ class Tesco():
                 split.pop(1)
                 data = self.format_data(split)
 
+                url = f"https://www.tesco.ie{row.find_all('a')[0].attrs['href']}"
                 if 'not available' not in data[2] and 'Rest of Sandwiches shelf' not in data[2]:
                     brand = self._get_brand(data)
                     if ('valid from') not in brand and "Lunch Meal Deal" not in brand:
-                        return_list.append(generate_insert(catagory, brand, 'Tesco', data))
+                        return_list.append(generate_insert(catagory, brand, 'Tesco', data,url))
         return return_list

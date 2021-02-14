@@ -4,18 +4,8 @@ from backend.src.database import DBConnector
 from fastapi import FastAPI
 import uvicorn
 
-# tesco = Tesco(shopping_list)
-# supervalu = Supervalu(shopping_list)
-#
-# tesco.get_tesco_products()
-# supervalu.get_supervalu_products()
-# sql = tesco.get_tesco_products() + supervalu.get_supervalu_products()
-#
-# for item in (sql):
-#     print(item)
-
-
 app = FastAPI()
+
 
 @app.get("/")
 def read_root():
@@ -31,7 +21,9 @@ def read_root():
 def read_item(item_name: str):
     result = db.get_item(item=item_name)
     if (result):
-        return (result)
+
+        return [{'key': item[0], 'description': item[1], 'shop': item[2], 'price': item[3]} for item in result]
+
     else:
         tesco = Tesco([item_name])
         supervalu = Supervalu([item_name])
@@ -40,8 +32,8 @@ def read_item(item_name: str):
         supervalu.get_supervalu_products()
         sql = tesco.get_tesco_products() + supervalu.get_supervalu_products()
         db.perform_insert(sql)
-
-        return db.get_item(item=item_name)
+        result = db.get_item(item=item_name)
+        return [{'key': item[0], 'description': item[1], 'shop': item[2], 'price': item[3]} for item in result]
 
 
 if __name__ == "__main__":

@@ -7,9 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import axios from "axios";
 import {Button, TextField} from "@material-ui/core";
-
 
 
 class App extends React.Component {
@@ -18,29 +16,46 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            search_query: '',
-            result_data: []
+            search_query: 'Milk',
+            result_data: [{'key':1,'description':'hello','shop':'world','price':69}],
         };
     }
 
     componentDidMount() {
-        this.perform_request('milk')
+        this.perform_request()
         console.log(this.state.result_data)
-  }
+    }
 
+    async perform_request() {
+          const response = await fetch("http://localhost:8000/products/" + this.state.search_query);
+          const data = await response.json();
+          console.log(data)
+          this.setState({result_data: data});
+    }
 
-
-    perform_request(item) {
-        this.setState({apiFilter: item});
-        axios("http://localhost:8000/products/" + item).then(({data}) => {
-            this.setState({result_data: data })});}
-
+    updateSearch = (e) => {
+        console.log(e.target.value);
+        this.setState(() => {
+            return {
+                search_query: e.target.value
+            }
+        });
+    }
 
     render() {
         return (
             <div>
-                <TextField id="standard-basic" label="Standard"/>
-                <Button variant="contained">Search</Button>
+                <TextField id="search"
+                           value={this.value}
+                           onChange={e => {
+                               e.persist();
+                               this.updateSearch(e)
+                           }}
+                           label="Standard"/>
+
+                <Button variant="contained" onClick={() => {
+                    this.perform_request()
+                }}>Search</Button>
 
                 <TableContainer component={Paper}>
                     <Table aria-label="simple table">

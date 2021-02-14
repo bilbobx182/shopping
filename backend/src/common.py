@@ -19,8 +19,16 @@ def replace_ownbrand(data,brand):
 def remove_currency(data):
     return data.replace('€',"")
 
-def generate_insert(catagory,item,shop,data):
- return (f"INSERT into product values (DEFAULT,'{cleanse(catagory)}','{cleanse(item)}','{shop}','{(data[1].strip())}','{cleanse(data[2].strip())}','{DATE}');")
+def generate_insert(catagory,item,shop,data,url,brand=None,sku=None):
+    price = f"{(data[1].strip())}"
+    other = f"{cleanse(data[2].strip())}"
+    if(brand == None):
+        brand = 'N/A'
+    if(sku == None):
+        sku = 'N/A'
+    rstr = f"INSERT into product values (DEFAULT,'{cleanse(catagory)}','{cleanse(item)}','{shop}','{price}','{DATE}','{brand}','{sku}','{url}','{other}');"
+    print(rstr)
+    return rstr
 
 def perform_request(url):
     result = requests.get(url)

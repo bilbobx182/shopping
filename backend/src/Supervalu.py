@@ -17,7 +17,8 @@ class Supervalu():
                                                                                               "").strip(),
                             "supervalu")).split("    ")
                         item = (data[0])
-                        sql = generate_insert(catagory, item, 'SuperValu', data)
+                        url = product.find_all('a')[0].attrs['href']
+                        sql = generate_insert(catagory, item, 'SuperValu', data,url)
                         return_list.append(sql)
                 except AttributeError as e:
                     continue
