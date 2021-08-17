@@ -17,7 +17,8 @@ class App extends React.Component {
         super(props);
         this.state = {
             search_query: 'Milk',
-            result_data: [{'key':1,'description':'hello','shop':'world','price':69}],
+            result_data: [{'key': 1, 'description': 'hello', 'shop': 'world', 'price': 69}],
+            savedItems: [{'key': '', 'description': '', 'shop': '', 'price': ''}],
         };
     }
 
@@ -27,10 +28,10 @@ class App extends React.Component {
     }
 
     async perform_request() {
-          const response = await fetch("http://localhost:8000/products/" + this.state.search_query);
-          const data = await response.json();
-          console.log(data)
-          this.setState({result_data: data});
+        const response = await fetch("http://localhost:8000/products/" + this.state.search_query);
+        const data = await response.json();
+        console.log(data)
+        this.setState({result_data: data});
     }
 
     updateSearch = (e) => {
@@ -39,6 +40,23 @@ class App extends React.Component {
             return {
                 search_query: e.target.value
             }
+        });
+    }
+    addItem = (e) => {
+        let copy = this.state.savedItems;
+        copy.push(e)
+        this.setState(() => {
+            return {
+                savedItems: copy
+            }
+        });
+    }
+
+    removeItem = (e) => {
+        this.setState({
+            savedItems: this.state.savedItems.filter(function (item) {
+                return item !== e
+            })
         });
     }
 
@@ -57,6 +75,7 @@ class App extends React.Component {
                     this.perform_request()
                 }}>Search</Button>
 
+
                 <TableContainer component={Paper}>
                     <Table aria-label="simple table">
                         <TableHead>
@@ -69,9 +88,36 @@ class App extends React.Component {
                         <TableBody>
                             {this.state.result_data.map((row) => (
                                 <TableRow key={row.name}>
-                                    <TableCell align="left">{row.description}</TableCell>
+                                    <TableCell component="a" href={row.url} align="left">{row.description}</TableCell>
                                     <TableCell align="left">{row.shop}</TableCell>
                                     <TableCell align="left">{row.price}</TableCell>
+                                    <Button variant="outlined" onClickCapture={() => {this.addItem(row)}}>➕</Button>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+
+                <h1> My List </h1>
+                <TableContainer component={Paper}>
+                    <Table aria-label="simple table"
+                           onRowSelection={this._onRowSelection}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="left">Item</TableCell>
+                                <TableCell align="left">Shop</TableCell>
+                                <TableCell align="left">Price</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {this.state.savedItems.map((row) => (
+                                <TableRow key={row.name}>
+                                    <TableCell component="a" href={row.url} align="left">{row.description}</TableCell>
+                                    <TableCell align="left">{row.shop}</TableCell>
+                                    <TableCell align="left">{row.price}</TableCell>
+                                    <Button variant="outlined" onClick={e => {
+                                        this.removeItem(row)
+                                    }}>-</Button>
                                 </TableRow>
                             ))}
                         </TableBody>
