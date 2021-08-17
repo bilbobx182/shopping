@@ -22,7 +22,7 @@ def read_item(item_name: str):
     result = db.get_item(item=item_name)
     if (result):
 
-        return [{'key': item[0], 'description': item[1], 'shop': item[2], 'price': item[3]} for item in result]
+        return [{'key': item[0], 'description': item[1], 'shop': item[2], 'price': item[3],'url' : item[4]} for item in result]
 
     else:
         tesco = Tesco([item_name])
@@ -33,7 +33,7 @@ def read_item(item_name: str):
         sql = tesco.get_tesco_products() + supervalu.get_supervalu_products()
         db.perform_insert(sql)
         result = db.get_item(item=item_name)
-        return [{'key': item[0], 'description': item[1], 'shop': item[2], 'price': item[3]} for item in result]
+        return [{'key': item[0], 'description': item[1], 'shop': item[2], 'price': item[3],'url' : item[4]} for item in result]
 
 
 if __name__ == "__main__":

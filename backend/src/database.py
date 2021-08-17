@@ -15,6 +15,6 @@ class DBConnector:
             self._conn.commit()
 
     def get_item(self, item):
-        select = f"select id,description,retailer,price from product where catagory like '{item.lower()}' order by price ASC limit (60);"
+        select = f"select id,description,retailer,price,url from product where catagory like '{item.lower()}' order by price ASC limit (60);"
         self._cursor.execute(select)
         return self._cursor.fetchall()
