@@ -1,0 +1,124 @@
+tr,td {
+  color: black;
+}
+.flex-container {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items: stretch;
+  align-content: stretch;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+}
+
+.flex-item:nth-child(1) {
+  -webkit-order: 0;
+  width: 100%;
+  -ms-flex-order: 0;
+  order: 0;
+  -webkit-flex: 0 1 auto;
+  -ms-flex: 0 1 auto;
+  flex: 0 1 auto;
+  -webkit-align-self: auto;
+  -ms-flex-item-align: auto;
+  align-self: auto;
+  background-color: #bcb7c3;
+  flex-shrink: 0;
+  flex-grow: 1;
+}
+
+.flex-item:nth-child(2) {
+  width: 100%;
+  height:50%;
+  flex-shrink: 0;
+  flex-grow: 1;
+  -webkit-order: 0;
+  -ms-flex-order: 0;
+  order: 0;
+  -webkit-flex: 0 1 auto;
+  -ms-flex: 0 1 auto;
+  flex: 0 1 auto;
+  -webkit-align-self: auto;
+  -ms-flex-item-align: auto;
+  align-self: auto;
+  background-color: #5f5b66;
+}
+
+#flexbody {
+  width:80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#searchContainer {
+  background-color: #5a5b5c;
+  color: aliceblue;
+  margin-left: auto;
+  margin-right: auto;
+  width:90%;
+  border-radius: 2%;
+  margin-bottom: 1%;
+}
+
+mat-form-field {
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+}
+
+.flex-item:nth-child(3) {
+  width: 100%;
+  -webkit-order: 0;
+  -ms-flex-order: 0;
+  order: 0;
+  -webkit-flex: 0 1 auto;
+  -ms-flex: 0 1 auto;
+  flex: 0 1 auto;
+  -webkit-align-self: auto;
+  -ms-flex-item-align: auto;
+  align-self: auto;
+  background-color: #5f5b66;
+  flex-shrink: 0;
+  flex-grow: 1;
+}
+
+
+table{
+ width: 100%;
+}
+
+.mat-header-cell {
+  background-color: #6520cf;
+  color: aliceblue;
+}
+
+.mat-cell {
+    color: black;
+}
+
+.mat-row {
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 10% !important;
+  width: 10% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  background-color: #ba99ea;
+  word-break: break-word;
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}

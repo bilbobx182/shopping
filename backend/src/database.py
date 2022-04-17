@@ -4,7 +4,9 @@ import psycopg2
 class DBConnector:
 
     def __init__(self):
-        self._conn_string = "host='localhost' dbname='shopping' user='postgres'"
+        # self._conn_string = "host='0.0.0.0' dbname='shopping' user='postgres'"
+        self._conn_string = "host='ciarandb.cygcjduv9tkp.eu-west-1.rds.amazonaws.com' dbname='shopping' user='postgres' password='unlockthesky'"
+
         self._conn = psycopg2.connect(self._conn_string)
         self._cursor = self._conn.cursor()
 

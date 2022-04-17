@@ -1,6 +1,7 @@
-from backend.src.Tesco import Tesco
-from backend.src.Supervalu import Supervalu
-from backend.src.database import DBConnector
+from Tesco import Tesco
+from Supervalu import Supervalu
+from Aldi import Aldi
+from database import DBConnector
 from fastapi import FastAPI
 import uvicorn
 
@@ -27,7 +28,8 @@ def read_item(item_name: str):
     else:
         tesco = Tesco([item_name])
         supervalu = Supervalu([item_name])
-
+        aldi = Aldi([item_name])
+        aldi.get_aldi_products()
         tesco.get_tesco_products()
         supervalu.get_supervalu_products()
         sql = tesco.get_tesco_products() + supervalu.get_supervalu_products()

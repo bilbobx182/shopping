@@ -1,1 +1,7 @@
-Never created one first time around lets go again.
+Grocery application for finding cheapest in Dublin.
+
+## TODO
+
+- Create Diagram of connections
+- Create Dockerfile for frontend, backend, and DB.
+  - Test above.

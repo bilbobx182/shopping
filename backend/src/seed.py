@@ -1,7 +1,7 @@
-from backend.src.Tesco import Tesco
-from backend.src.Supervalu import Supervalu
-from backend.src.database import DBConnector
-from backend.src.Aldi import Aldi
+from Tesco import Tesco
+from Supervalu import Supervalu
+from database import DBConnector
+from Aldi import Aldi
 
 # CREATE TABLE product (
 #       id serial PRIMARY KEY,
