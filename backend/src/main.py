@@ -3,9 +3,19 @@ from Supervalu import Supervalu
 from Aldi import Aldi
 from database import DBConnector
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
 app = FastAPI()
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
@@ -15,7 +25,7 @@ def read_root():
 
 @app.get("/products")
 def read_root():
-    return {"Hello": "World"}
+    return {"help": "Please ping /products/{item}"}
 
 
 def get_data(item_name:str):
@@ -50,6 +60,10 @@ def read_item(item_name: str):
     :param item_name:
     :return:
     """
+    global db
+    # reset it to nothing to avoid an error.
+    db = ""
+    db = DBConnector()
     is_old_data = db.is_old_data(item=item_name)
     if is_old_data:
         # Then logically get the new set of data.
@@ -59,6 +73,4 @@ def read_item(item_name: str):
 
 
 if __name__ == "__main__":
-    global db
-    db = DBConnector()
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000,ssl_keyfile="/ssl/key.pem",ssl_certfile="/ssl/cert.pem")
