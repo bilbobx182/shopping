@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy" : "ng serve --ssl true --ssl-cert cert.pem --ssl-key privkey.pem"
+    "deploy": "ng serve --ssl true --ssl-cert cert.pem --ssl-key privkey.pem"
   },
   "private": true,
   "dependencies": {
@@ -24,21 +24,21 @@
     "@angular/router": "~11.1.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
-    "zone.js": "~0.11.3"
+    "zone.js": "^0.11.5"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1101.4",
     "@angular/cli": "~11.1.4",
     "@angular/compiler-cli": "~11.1.2",
     "@types/jasmine": "~3.6.0",
-    "@types/node": "^12.11.1",
+    "@types/node": "^12.20.48",
     "codelyzer": "^6.0.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.2.0",
-    "karma-chrome-launcher": "~3.1.0",
+    "karma-chrome-launcher": "^3.1.1",
     "karma-coverage": "~2.0.3",
-    "karma-jasmine": "~4.0.0",
+    "karma-jasmine": "^4.0.2",
     "karma-jasmine-html-reporter": "^1.5.0",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
