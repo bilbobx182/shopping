@@ -1,39 +1,26 @@
 <div class="flex-container">
 
   <div class="flex-item">
-    <h1>Ireland Grocery Compare</h1>
+    <h1 class="mdc-typography--headline1">Ireland Grocery Compare</h1>
   </div>
 
   <div class="flex-item">
     <div id="flexbody">
-      <form>
-        <div id="searchContainer">
+      <form id="formbox" onSubmit="return false;">
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Search Products!</mat-label>
-            <input matInput (change)="updateSearch($event)" #message maxlength="256" placeholder="Milk">
-            <mat-hint align="start"><strong>Try search for broad terms</strong></mat-hint>
-            <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+            <input matInput (input)="updateSearch($event)" (keydown.enter)="getProduct($event)" maxlength="256" placeholder="Milk">
+            <mat-hint align="start"><strong>Try search for broad terms like "milk".</strong></mat-hint>
           </mat-form-field>
           <button type='button' (click)="getProduct($event)" mat-raised-button color="primary">Go!</button>
-        </div>
 
 
         <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
           <!-- Checkbox Column -->
           <ng-container matColumnDef="select">
-            <th mat-header-cell *matHeaderCellDef>
-              <mat-checkbox (change)="$event ? masterToggle() : null"
-                            [checked]="selection.hasValue() && isAllSelected()"
-                            [indeterminate]="selection.hasValue() && !isAllSelected()">
-              </mat-checkbox>
-            </th>
-            <td mat-cell *matCellDef="let row">
-              <mat-checkbox (click)="$event.stopPropagation()"
-                            (change)="$event ? selection.toggle(row) : null"
-                            [checked]="selection.isSelected(row)">
-              </mat-checkbox>
-            </td>
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let row"></td>
           </ng-container>
           <!-- Position Column -->
           <ng-container matColumnDef="description">
@@ -59,37 +46,6 @@
         </table>
 
       </form>
-
-      <br>
-      <h2>Selected items</h2>
-      <div class="flex-item">
-        <form>
-          <table mat-table [dataSource]="selectedSource" matSort class="mat-elevation-z8">
-
-            <!-- Position Column -->
-            <ng-container matColumnDef="description">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Desc</th>
-              <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-            </ng-container>
-
-            <!-- Name Column -->
-            <ng-container matColumnDef="shop">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Shop</th>
-              <td mat-cell *matCellDef="let element"> {{element.shop}} </td>
-            </ng-container>
-
-            <!-- Weight Column -->
-            <ng-container matColumnDef="price">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Price</th>
-              <td mat-cell *matCellDef="let element"> {{element.price}} </td>
-            </ng-container>
-
-
-            <tr mat-header-row *matHeaderRowDef="selectedColums"></tr>
-            <tr mat-row *matRowDef="let row; columns: selectedColums;"></tr>
-          </table>
-        </form>
-      </div>
     </div>
   </div>
 

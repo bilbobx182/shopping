@@ -1,13 +1,12 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ViewChild,ChangeDetectorRef} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {SelectionModel} from "@angular/cdk/collections";
-
+import {MAT_FORM_FIELD, MatFormField, MatFormFieldControl} from '@angular/material/form-field';
+import { HttpClient } from '@angular/common/http';
 
 const ELEMENT_DATA: any[] = [
-  {description: 1, shop: 'Hydrogen', price: 1.0079, symbol: 'H'},
-  {description: 2, shop: 'Helium', price: 4.0026, symbol: 'He'},
-  {description: 3, shop: 'Lithium', price: 6.941, symbol: 'Li'},
+  {description: 1, shop: 'TESCO', price: 1},
 ];
 
 const SELECTED_DATA: any[] = [
@@ -24,42 +23,38 @@ export class AppComponent implements AfterViewInit {
   selectedData : any[] = this.selection.selected
   displayedColumns: string[] = ['select','description','shop', 'price'];
   selectedColums: string[] = ['description','shop', 'price'];
+  data:any[] = [];
+
   dataSource = new MatTableDataSource(ELEMENT_DATA);
-  selectedSource = new MatTableDataSource(SELECTED_DATA);
   search = ''
-
-
 
   @ViewChild(MatSort)
   sort: MatSort = new MatSort;
-
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
 
-    /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    this.selectedData = this.selection.selected;
-    this.selectedSource = new MatTableDataSource<Element>(this.selection.selected);
-    return numSelected === numRows;
-  }
+  constructor(private httpClient: HttpClient,private changeDetectorRefs: ChangeDetectorRef) { }
+
+
 
   getProduct(event:any) {
-    console.log("hi")
+     this.httpClient.get<any[]>(`http://0.0.0.0:8000/products/${this.search}`)
+           .subscribe(data => {
+               this.data= data;
+                 this.dataSource = new MatTableDataSource(this.data);
+                 this.dataSource.sort = this.sort;
+                 this.refresh();
+           }
+  );
   }
 
   updateSearch(event:any) {
     this.search = event.target.value
-    this.http.get<any[]>("/courses.json").map(data => _.values(data)).do(console.log);
+    console.log(this.search)
   }
 
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
+  refresh() {
+  this.changeDetectorRefs.detectChanges();
   }
 }
