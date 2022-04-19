@@ -1,4 +1,4 @@
 export const environment = {
-  production: true,
-  apiUrl: '0.0.0.0:8000/products/'
+  production: false,
+  apiUrl: 'https://www.taifuwiddies.net:8000/products/'
 };

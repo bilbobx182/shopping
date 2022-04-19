@@ -3,18 +3,7 @@ from Supervalu import Supervalu
 from database import DBConnector
 from Aldi import Aldi
 
-# CREATE TABLE product (
-#       id serial PRIMARY KEY,
-#       catagory  VARCHAR NOT NULL,
-#       description VARCHAR  NOT NULL,
-#       retailer VARCHAR  NOT NULL,
-#       price FLOAT NOT NULL,
-#       last_updated TIMESTAMP NOT NULL ,
-#       brand VARCHAR NOT NULL,
-#       sku VARCHAR NOT NULL,
-#       url VARCHAR NOT NULL,
-#       other VARCHAR
-#   );
+# Testing python code used to seed the database.
 
 catagories = ["Milk chocolate digestives",
               "milk",

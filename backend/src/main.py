@@ -9,6 +9,7 @@ import uvicorn
 app = FastAPI()
 origins = ["*"]
 
+# Configure the backend so requests can be sent so we don't have CORS issues.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -19,12 +20,16 @@ app.add_middleware(
 
 
 @app.get("/")
-def read_root():
+def root():
+    """
+    Dummy method to ping.
+    :return: Dict
+    """
     return {"Hello": "World"}
 
 
 @app.get("/products")
-def read_root():
+def products():
     return {"help": "Please ping /products/{item}"}
 
 
@@ -40,28 +45,35 @@ def get_data(item_name:str):
     aldi = Aldi([item_name])
     sql = tesco.get_tesco_products() + supervalu.get_supervalu_products() + aldi.get_aldi_products()
     db.perform_insert(sql)
+    # Todo, change this to be in memory representation we return rather than querying again from DB.
     return get_result_from_db(item_name)
 
 
 def get_result_from_db(item_name:str):
+    """
+    When needed we get an item from the DB.
+    :param item_name:
+    :return:
+    """
     result = db.get_item(item=item_name)
     return_data = []
     try:
         for item in result:
             return_data.append({'key': item[0], 'description': item[1], 'shop': item[2], 'price': item[3], 'url': item[4]})
     except Exception as e:
+        # TODO catch less broad exceptions.
         print(e)
     return return_data
 
 @app.get("/products/{item_name}")
 def read_item(item_name: str):
     """
-    API endpoint of reading
+    Main API endpoint for querying items.
     :param item_name:
-    :return:
+    :return: [{items},{items}]
     """
     global db
-    # reset it to nothing to avoid an error.
+    # reset it to nothing to avoid dying connections.
     db = ""
     db = DBConnector()
     is_old_data = db.is_old_data(item=item_name)
@@ -73,4 +85,8 @@ def read_item(item_name: str):
 
 
 if __name__ == "__main__":
+    """
+    Start the fast API with SSL.
+    """
+    # Todo don't hardcode this, set by env vars.
     uvicorn.run(app, host="0.0.0.0", port=8000,ssl_keyfile="/ssl/key.pem",ssl_certfile="/ssl/cert.pem")

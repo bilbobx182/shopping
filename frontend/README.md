@@ -2,6 +2,11 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.4.
 
+
+- TODO : fix flexbox breaking on loading lots of new rows.
+- TODO : Set Icon and title for website.
+- TODO : Add loading spinner.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

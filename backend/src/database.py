@@ -4,13 +4,19 @@ import datetime
 class DBConnector:
 
     def __init__(self):
-        # self._conn_string = "host='0.0.0.0' dbname='shopping' user='postgres'"
-        self._conn_string = "host='ciarandb.cygcjduv9tkp.eu-west-1.rds.amazonaws.com' dbname='shopping' user='postgres' password='unlockthesky'"
+        # TODO Fill in the password programatically at build using SED.
+        # TODO set the host by an environment variable.
+        self._conn_string = "host='ciarandb.cygcjduv9tkp.eu-west-1.rds.amazonaws.com' dbname='shopping' user='postgres' password='FILLMEIN'"
 
         self._conn = psycopg2.connect(self._conn_string)
         self._cursor = self._conn.cursor()
 
     def perform_insert(self, insert_data):
+        """
+        Method to insert the data and commit it.
+        :param insert_data:
+        :return:
+        """
         for item in insert_data:
             print(item)
             self._cursor.execute(item)

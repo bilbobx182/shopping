@@ -39,7 +39,9 @@ export class AppComponent implements AfterViewInit {
 
 
   getProduct(event:any) {
-     this.httpClient.get<any[]>(`http://0.0.0.0:8000/products/${this.search}`)
+    // TODO use the environment variables for the HOST.
+    // TODO Create an angular service for performing HTTP requests so the same code isn't everywhere.
+     this.httpClient.get<any[]>(`https://www.taifuwiddies.net:8000/products/${this.search}`)
            .subscribe(data => {
                this.data= data;
                  this.dataSource = new MatTableDataSource(this.data);

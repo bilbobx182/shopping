@@ -10,7 +10,6 @@
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Search Products!</mat-label>
             <input matInput (input)="updateSearch($event)" (keydown.enter)="getProduct($event)" maxlength="256" placeholder="Milk">
-            <mat-hint align="start"><strong>Try search for broad terms like "milk".</strong></mat-hint>
           </mat-form-field>
           <button type='button' (click)="getProduct($event)" mat-raised-button color="primary">Go!</button>
 
