@@ -2,6 +2,22 @@
 This project is a grocery store checker to scrape the websites to find the cheapest item in the stores.
 Also useful to track price changes over time as we store things every 30 days.
 
+## Why you should care about this project
+
+##### The buzzwords.
+Let's just get them out of the way here : Docker,Angular,Nginx,FastAPI,Python,AWS,Postgres,SSL,Certbot.
+
+This is the sales pitch about why this is cool, where the complexity is in the project.
+
+- Good example of multi-stage docker images.
+    - Good use of Nginx as a reverse proxy.
+- Example of using FastAPI and Docker to perform web-scraping.
+- Generating and using SSL certificates to make applications more secure.
+- How networking works in the full-stack of an application lifecycle.
+- Using ECR to manage docker images to build locally with a lot more ram rather than on a poor t2.micro.
+- Using Postgres as a database solution with RDS.
+
+
 ## Backend
 
 Python FAST API wrapped in a docker container. 
