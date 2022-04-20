@@ -2,6 +2,8 @@
 This project is a grocery store checker to scrape the websites to find the cheapest item in the stores.
 Also useful to track price changes over time as we store things every 30 days.
 
+[Demo on youtube](https://www.youtube.com/watch?v=R-QvetimMjE)
+
 ## Why you should care about this project
 
 ##### The buzzwords.
@@ -16,6 +18,12 @@ This is the sales pitch about why this is cool, where the complexity is in the p
 - How networking works in the full-stack of an application lifecycle.
 - Using ECR to manage docker images to build locally with a lot more ram rather than on a poor t2.micro.
 - Using Postgres as a database solution with RDS.
+####  Diagrams
+### Simple Diagram
+![Basic Diagram](https://i.imgur.com/HpOiY93.png)
+#### Sequence Diagram
+![Sequence Diagram](https://i.imgur.com/doP0B4Y.png)
+
 
 
 ## Backend
@@ -32,6 +40,8 @@ Angular v11.1.4 behind an Nginx reverse proxy in a docker container that talks t
 - EC2 t2.micro instance to host backend and frontend.
 - Security groups configured (443/8000) to allow traffic in and out of the VPC.
 - RDS instance created to store data.
+- Route53 for DNS
+- Certbot / LetsEnrypt used for SSL.
 
 #### RDS Table
 ```
