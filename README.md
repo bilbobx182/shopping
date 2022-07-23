@@ -2,7 +2,10 @@
 This project is a grocery store checker to scrape the websites to find the cheapest item in the stores.
 Also useful to track price changes over time as we store things every 30 days.
 
-[Demo on youtube](https://www.youtube.com/watch?v=R-QvetimMjE)
+![Demo gif of the functionality in V1!](https://i.imgur.com/MlELo8J.gif)
+
+
+[Prototype demo and explanation on youtube](https://www.youtube.com/watch?v=R-QvetimMjE)
 
 ## Why you should care about this project
 
