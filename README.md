@@ -54,9 +54,18 @@ Angular v11.1.4 behind an Nginx reverse proxy in a docker container that talks t
        last_updated TIMESTAMP NOT NULL ,
        brand VARCHAR NOT NULL,
        sku VARCHAR NOT NULL,
-       url VARCHAR NOT NULL,
+       url VARCHAR UNIQUE NOT NULL,
        other VARCHAR
    );
+
+
+CREATE TABLE historical_prices ( 
+ id serial PRIMARY KEY, 
+ url VARCHAR NOT NULL, 
+ price FLOAT NOT NULL, 
+ last_time TIMESTAMP NOT NULL, 
+ CONSTRAINT productIDCon FOREIGN KEY ( url ) REFERENCES public.product ( url ) 
+); 
 ```
 
 - A feature I would like to Add is have a historical_price where we just note a price and a product ID.
@@ -64,4 +73,13 @@ Angular v11.1.4 behind an Nginx reverse proxy in a docker container that talks t
 ## Manual changes
 
 - To generate the SSL certificates we used Certbot :
+`sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm`
 `sudo certbot certonly --manual --preferred-challenges=dns --email onuallainc@gmail.com --server https://acme-v02.api.letsencrypt.org/directory --agree-tos -d *.taifuwiddies.net`
+
+
+## Things I'd like to do !
+
+- [ ] Add image rendering to frontend.
+- [ ] Add analytics tickers for what's going up and down in prices.
+- [ ] Add historical changes to a given product view.
+- [ ] Add metrics about what's most interesting.

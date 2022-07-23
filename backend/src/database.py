@@ -1,12 +1,18 @@
 import psycopg2
 import datetime
+from datetime import date
+today = date.today()
+
+
+# TODO SET ENV VAR
+PRICE_DAYS_BACK = 5
 
 class DBConnector:
 
     def __init__(self):
         # TODO Fill in the password programatically at build using SED.
         # TODO set the host by an environment variable.
-        self._conn_string = "host='ciarandb.cygcjduv9tkp.eu-west-1.rds.amazonaws.com' dbname='shopping' user='postgres' password='FILLMEIN'"
+        self._conn_string = "host='con-test.cygcjduv9tkp.eu-west-1.rds.amazonaws.com' dbname='shopping' user='postgres' password='{set the password here}'"
 
         self._conn = psycopg2.connect(self._conn_string)
         self._cursor = self._conn.cursor()
@@ -17,32 +23,39 @@ class DBConnector:
         :param insert_data:
         :return:
         """
-        for item in insert_data:
-            print(item)
-            self._cursor.execute(item)
-            self._conn.commit()
+        try:
+            for item in insert_data:
+                print(item)
+                self._cursor.execute(item)
+                self._conn.commit()
+        except Exception as e:
+            print(e)
 
     def get_item(self, item):
-        select = f"select id,description,retailer,price,url from product where catagory like '{item.lower()}' order by price ASC limit (160);"
+        try:
+            select = f"select id,description,retailer,price,url from product where catagory like '{item.lower()}' order by price ASC limit (160);"
+            self._cursor.execute(select)
+            return self._cursor.fetchall()
+        except Exception as e:
+            print(e)
+
+    def get_old(self):
+        select = f"select date_trunc('hour', last_updated),id,url, from product order by date_trunc('hour', last_updated) desc limit(1);"
         self._cursor.execute(select)
         return self._cursor.fetchall()
 
-    def is_old_data(self, item):
+    def should_fetch_new(self, item):
         """
-        Method used for querying whether we need to refresh the data.
+        If this returns things, that means there are entries for that item within the past N days.
+        Therefore we don't need to get it again
         :param item:
         :return:
         """
-        select = f"select date_trunc('hour', last_updated),id from product  where catagory like '{item.lower()}' order by date_trunc('hour', last_updated) desc limit(1);  "
+        select = f"select date_trunc('hour', last_updated),catagory from product WHERE date_trunc('hour', last_updated) >  NOW() - INTERVAL '{PRICE_DAYS_BACK} days' AND catagory ilike '{item}' limit(1);"
         self._cursor.execute(select)
         data = self._cursor.fetchall()
-        if not data:
-            # Scenario no data, therefore it's new.
-            return True
 
-        for row in data:
-
-            if (((row[0].date() - datetime.datetime.now().date())).days > 30):
-                return True
-            else:
-                return False
+        # If there is no data returned by the cursor, that means we need to get some
+        if data:
+            return False
+        return True

@@ -31,7 +31,15 @@ def generate_insert(catagory,item,shop,data,url,brand=None,sku=None):
         brand = 'N/A'
     if(sku == None):
         sku = 'N/A'
-    rstr = f"INSERT into product values (DEFAULT,'{cleanse(catagory)}','{cleanse(item)}','{shop}','{price}','{DATE}','{brand}','{sku}','{url}','{other}');"
+
+    # Whenever we get new data with the same URL, we update the price
+    rstr = f"INSERT into product values (DEFAULT,'{cleanse(catagory)}','{cleanse(item)}','{shop}','{price}','{DATE}','{brand}','{sku}','{url}','{other}') on conflict(url) do update set price = {price};"
+
+    return rstr
+
+def generate_historical(data,url):
+    price = f"{(data[1].strip())}"
+    rstr = f"INSERT into historical_prices values (DEFAULT,'{url}','{price}','{DATE}');"
     return rstr
 
 

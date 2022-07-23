@@ -43,8 +43,17 @@ def get_data(item_name:str):
     tesco = Tesco([item_name])
     supervalu = Supervalu([item_name])
     aldi = Aldi([item_name])
-    sql = tesco.get_tesco_products() + supervalu.get_supervalu_products() + aldi.get_aldi_products()
-    db.perform_insert(sql)
+
+    # I was debugging this, I had it previously + ing the lists, but this is nicer to debug.
+    db.perform_insert(tesco.products)
+    db.perform_insert(supervalu.products)
+    db.perform_insert(aldi.products)
+
+    db.perform_insert(tesco.historical + supervalu.historical + aldi.historical)
+
+
+
+
     # Todo, change this to be in memory representation we return rather than querying again from DB.
     return get_result_from_db(item_name)
 
@@ -76,17 +85,28 @@ def read_item(item_name: str):
     # reset it to nothing to avoid dying connections.
     db = ""
     db = DBConnector()
-    is_old_data = db.is_old_data(item=item_name)
-    if is_old_data:
+    fetch_new = db.should_fetch_new(item=item_name)
+    if fetch_new:
         # Then logically get the new set of data.
         return get_data(item_name)
     else:
         return get_result_from_db(item_name)
 
+# Goal :
+"""
+Add 
+
+- Format it input in the database so everything is lowercase.
+- On each search, add entry to historical.
+- Add Job to migrate data each day.
+- Fix bug on searching
+
+"""
 
 if __name__ == "__main__":
     """
     Start the fast API with SSL.
     """
     # Todo don't hardcode this, set by env vars.
-    uvicorn.run(app, host="0.0.0.0", port=8000,ssl_keyfile="/ssl/key.pem",ssl_certfile="/ssl/cert.pem")
+    # uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000, ssl_keyfile="/ssl/key.pem", ssl_certfile="/ssl/cert.pem")

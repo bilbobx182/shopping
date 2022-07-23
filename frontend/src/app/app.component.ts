@@ -6,7 +6,7 @@ import {MAT_FORM_FIELD, MatFormField, MatFormFieldControl} from '@angular/materi
 import { HttpClient } from '@angular/common/http';
 
 const ELEMENT_DATA: any[] = [
-  {description: 1, shop: 'TESCO', price: 1},
+  {description: 1, shop: 'Use the search above to find the cheapest groceries!', price: 0},
 ];
 
 const SELECTED_DATA: any[] = [

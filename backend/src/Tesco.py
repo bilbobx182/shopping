@@ -1,8 +1,15 @@
-from common import perform_request, generate_insert
+from common import perform_request, generate_insert,generate_historical
 import re
 
 
 class Tesco():
+
+    historical = []
+    products = []
+
+    def __init__(self, compare_items):
+        self._compare_items = compare_items
+        self.get_tesco_products()
 
     def get_brand(self, product_information):
         return str(
@@ -48,11 +55,8 @@ class Tesco():
                                                                 (self.get_brand(data)), "SAVE"), "Any "),
             "Buy any").replace("'", "").replace("{", "").replace("}", "").strip()
 
-    def __init__(self, compare_items):
-        self._compare_items = compare_items
-
     def get_tesco_products(self):
-        return_list = []
+
         for catagory in self._compare_items:
             soup = perform_request(f"https://www.tesco.ie/groceries/en-IE/search?query={catagory}")
             for row in soup.find_all("li", {"class": "product-list--list-item"}):
@@ -66,8 +70,7 @@ class Tesco():
                             url = f"https://www.tesco.ie{row.find_all('a')[0].attrs['href']}"
                             product_info = self.format_data(desc)
                             if product_info:
-                                return_list.append(
+                                self.products.append(
                                     generate_insert(catagory, self._get_brand(product_info), 'Tesco', product_info,
                                                     url))
-
-        return return_list
+                                self.historical.append(generate_historical(product_info,url))
