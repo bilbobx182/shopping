@@ -1,20 +1,22 @@
 <div class="flex-container">
 
   <div class="flex-item">
-    <h1 class="mdc-typography--headline1">Ireland Grocery Compare</h1>
-  </div>
+    <h1 class="mdc-typography--headline1"> 🧺 Ireland Grocery Compare 🧺</h1>
+ </div>
 
   <div class="flex-item">
-    <div id="flexbody">
-      <form id="formbox" onSubmit="return false;">
-          <mat-form-field class="example-full-width" appearance="fill">
+    <div class="flexbody">
+
+      <form class="centered" onSubmit="return false;">
+          <mat-form-field appearance="fill">
             <mat-label>Search Products!</mat-label>
             <input matInput (input)="updateSearch($event)" (keydown.enter)="getProduct($event)" maxlength="256" placeholder="Milk">
           </mat-form-field>
           <button type='button' (click)="getProduct($event)" mat-raised-button color="primary">Go!</button>
+      </form>
 
-
-        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <div class="resultsContainer">
+          <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
           <!-- Checkbox Column -->
           <ng-container matColumnDef="select">
@@ -44,12 +46,14 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-
-      </form>
+      </div>
     </div>
   </div>
 
     <div class="flex-item">
+      <a href="https://github.com/bilbobx182/shopping"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" style="float:right;width:30px;height:30px;"> </a>
+      <a href="https://www.linkedin.com/in/onuallainc/"><img src="https://img.icons8.com/office/344/linkedin-circled--v2.png" style="float:right;width:30px;height:30px;"></a>
+
       <a href="https://ko-fi.com/taifuwiddies">
         <img src="https://storage.ko-fi.com/cdn/kofi_stroke_cup.svg" style="float:left;width:20px;height:20px;">
         <p> Help support the website I made, more support is more time for new features.</p>

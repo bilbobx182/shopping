@@ -45,7 +45,7 @@ tr,td {
   width: 100%;
   -webkit-order: 0;
   -ms-flex-order: 0;
-  order: 0;
+  order: 1;
   -webkit-flex: 0 1 auto;
   -ms-flex: 0 1 auto;
   flex: 0 1 auto;
@@ -62,6 +62,24 @@ tr,td {
   margin-right: auto;
 }
 
+.resultsContainer {
+  width:80%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 450px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+.centered {
+  width:90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-left:13%;
+  margin-top:1%;
+}
+
+
 #searchContainer {
   background-color: #5a5b5c;
   color: aliceblue;
@@ -76,14 +94,15 @@ tr,td {
 mat-form-field {
   margin-left: auto;
   margin-right: auto;
-  width: 90%;
+  width: 80%;
+  height: 70%;
 }
 
 .flex-item:nth-child(3) {
   width: 100%;
   -webkit-order: 0;
   -ms-flex-order: 0;
-  order: 0;
+  order: 3;
   -webkit-flex: 0 1 auto;
   -ms-flex: 0 1 auto;
   flex: 0 1 auto;
@@ -121,8 +140,4 @@ table{
   -moz-hyphens: auto;
   -webkit-hyphens: auto;
   hyphens: auto;
-}
-
-#formbox {
-  margin-top:5%;
 }

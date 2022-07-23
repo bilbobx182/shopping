@@ -70,7 +70,10 @@ class Tesco():
                             url = f"https://www.tesco.ie{row.find_all('a')[0].attrs['href']}"
                             product_info = self.format_data(desc)
                             if product_info:
-                                self.products.append(
-                                    generate_insert(catagory, self._get_brand(product_info), 'Tesco', product_info,
-                                                    url))
-                                self.historical.append(generate_historical(product_info,url))
+                                try:
+                                    self.products.append(
+                                        generate_insert(catagory, self._get_brand(product_info), 'Tesco', product_info,
+                                                        url))
+                                    self.historical.append(generate_historical(product_info,url))
+                                except Exception as e:
+                                    print(f"Couldn't do prices right {e}")
