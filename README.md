@@ -79,9 +79,19 @@ CREATE TABLE historical_prices (
 `sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm`
 `sudo certbot certonly --manual --preferred-challenges=dns --email onuallainc@gmail.com --server https://acme-v02.api.letsencrypt.org/directory --agree-tos -d *.taifuwiddies.net`
 
+## Feedback I actioned on so far V1.
+
+- [x] Storing historical prices and updating current products.
+- [x] Fixed scrolling on many results returned.
+- [x] Overall website theme to be less dark.
+- [x] Added last updated field to the UI.
+- [x] URL colour changed.
+- [x] Fixed the CSS.
+
 
 ## Things I'd like to do !
 
+- [ ] Weekly price seeding.
 - [ ] Add image rendering to frontend.
 - [ ] Add analytics tickers for what's going up and down in prices.
 - [ ] Add historical changes to a given product view.

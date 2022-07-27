@@ -3,6 +3,7 @@ import datetime
 from datetime import date
 today = date.today()
 
+import os
 
 # TODO SET ENV VAR
 PRICE_DAYS_BACK = 5
@@ -10,10 +11,7 @@ PRICE_DAYS_BACK = 5
 class DBConnector:
 
     def __init__(self):
-        # TODO Fill in the password programatically at build using SED.
-        # TODO set the host by an environment variable.
-        self._conn_string = "host='con-test.cygcjduv9tkp.eu-west-1.rds.amazonaws.com' dbname='shopping' user='postgres' password='{set the password here}'"
-
+        self._conn_string = f"host='con-test.cygcjduv9tkp.eu-west-1.rds.amazonaws.com' dbname='shopping' user='postgres' password='{PASSWORD}'"
         self._conn = psycopg2.connect(self._conn_string)
         self._cursor = self._conn.cursor()
 
@@ -33,7 +31,7 @@ class DBConnector:
 
     def get_item(self, item):
         try:
-            select = f"select id,description,retailer,price,url from product where catagory like '{item.lower()}' order by price ASC limit (160);"
+            select = f"select id,description,retailer,price,url,last_updated from product where catagory like '{item.lower()}' order by price ASC limit (160);"
             self._cursor.execute(select)
             return self._cursor.fetchall()
         except Exception as e:

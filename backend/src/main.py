@@ -48,11 +48,7 @@ def get_data(item_name:str):
     db.perform_insert(tesco.products)
     db.perform_insert(supervalu.products)
     db.perform_insert(aldi.products)
-
     db.perform_insert(tesco.historical + supervalu.historical + aldi.historical)
-
-
-
 
     # Todo, change this to be in memory representation we return rather than querying again from DB.
     return get_result_from_db(item_name)
@@ -68,7 +64,7 @@ def get_result_from_db(item_name:str):
     return_data = []
     try:
         for item in result:
-            return_data.append({'key': item[0], 'description': item[1], 'shop': item[2], 'price': item[3], 'url': item[4]})
+            return_data.append({'key': item[0], 'description': item[1], 'shop': item[2], 'price': item[3], 'url': item[4], 'last_updated': item[5]})
     except Exception as e:
         # TODO catch less broad exceptions.
         print(e)
@@ -108,5 +104,5 @@ if __name__ == "__main__":
     Start the fast API with SSL.
     """
     # Todo don't hardcode this, set by env vars.
-    # uvicorn.run(app, host="0.0.0.0", port=8000)
+    #uvicorn.run(app, host="0.0.0.0", port=8000)
     uvicorn.run(app, host="0.0.0.0", port=8000, ssl_keyfile="/ssl/key.pem", ssl_certfile="/ssl/cert.pem")

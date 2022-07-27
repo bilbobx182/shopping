@@ -6,8 +6,8 @@ import {MAT_FORM_FIELD, MatFormField, MatFormFieldControl} from '@angular/materi
 import { HttpClient } from '@angular/common/http';
 
 const ELEMENT_DATA: any[] = [
-  {description: 1, shop: 'Use the search above to find the cheapest groceries!', price: 0},
-  {description: 1, shop: 'PS you can scroll down in the box when you get results!', price: 0}
+  {description: 1, shop: 'Use the search above to find the cheapest groceries!', price: 0,last_updated : ''},
+  {description: 1, shop: 'PS you can scroll down in the box when you get results!', price: 0,last_updated : ''}
 ];
 
 const SELECTED_DATA: any[] = [
@@ -22,8 +22,8 @@ export class AppComponent implements AfterViewInit {
   title = 'Grocery Gauge';
   selection = new SelectionModel<any>(true, []);
   selectedData : any[] = this.selection.selected
-  displayedColumns: string[] = ['select','description','shop', 'price'];
-  selectedColums: string[] = ['description','shop', 'price'];
+  displayedColumns: string[] = ['select','description','shop', 'price','last_updated'];
+  selectedColums: string[] = ['description','shop', 'price','last_updated'];
   data:any[] = [];
 
   dataSource = new MatTableDataSource(ELEMENT_DATA);

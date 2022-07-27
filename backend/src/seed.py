@@ -1,11 +1,6 @@
-from Tesco import Tesco
-from Supervalu import Supervalu
-from database import DBConnector
-from Aldi import Aldi
+import requests
 
-# Testing python code used to seed the database.
-
-catagories = ["Milk chocolate digestives",
+catagories = [
               "milk",
               "butter",
               "carrots",
@@ -46,17 +41,16 @@ catagories = ["Milk chocolate digestives",
               "noodles",
               "bread",
               "Dog food",
-              "Granulated sugar",
+              "Sugar",
               "Cola",
               "Fanta",
               "Lemonade",
               "Crisps",
               "Nuts",
               "Nachos",
-              "Coca-Cola",
               "Cadbury",
+              "Chocolate",
               "Avonmore",
-              "Brennans",
               "Lucozade",
               "Tayto",
               "7 up",
@@ -71,21 +65,9 @@ catagories = ["Milk chocolate digestives",
               "Kinder",
               "Yoplait",
               "McVities",
-              "Pat The Baker",
               "Club",
               "chickpea",
               "pasta"]
 
-db = DBConnector()
-
-tesco = Tesco(catagories)
-sql = tesco.get_tesco_products()
-db.perform_insert(sql)
-
-sv = Supervalu(catagories)
-sql = sv.get_supervalu_products()
-db.perform_insert(sql)
-
-aldi = Aldi(catagories)
-sql = aldi.get_aldi_products()
-db.perform_insert(sql)
+for item in catagories:
+    print(requests.get(f"https://www.taifuwiddies.net:8000/products/{item}"))
