@@ -1,7 +1,7 @@
 <div class="flex-container">
 
   <div class="flex-item" id="header">
-    <h1 class="mdc-typography--headline1"> 🧺 Ireland Grocery Compare 🧺</h1>
+    <h1> 🧺 Ireland Grocery Compare 🧺</h1>
  </div>
 
   <div class="flex-item">
@@ -12,7 +12,10 @@
             <mat-label>Search Products!</mat-label>
             <input matInput (input)="updateSearch($event)" (keydown.enter)="getProduct($event)" maxlength="256" placeholder="Milk">
           </mat-form-field>
-          <button type='button' (click)="getProduct($event)" mat-raised-button color="primary">Go!</button>
+
+          <div id="buttonHolder">
+            <button type='button' (click)="getProduct($event)" mat-raised-button color="primary" class="mat-raised-button">Go!</button>
+          </div>
       </form>
 
       <div class="resultsContainer">

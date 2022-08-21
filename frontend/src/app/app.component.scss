@@ -1,26 +1,41 @@
 
 a,p {
-  color: black;
+  color: white;
 }
 
 input {
-  color: black;
+  color: white;
 }
 
 tr,td {
-  color: black;
+  color: white;
 }
+
+/*
+
+ #816797 TOP
+ #2C3333 BLACK BG
+ #51557E ROW
+ #1B2430 HEADER
+ */
 
 
 .flex-item{
   width: 100%;
   align-self: auto;
-  background-color: #e8e7e4;
+  background-color: #2C3333;
 }
 
 #header {
-color:#70AE98;
-background-color : #E7CBA9;
+color:#D6D5A8;
+background-color : #816797;
+text-align: center;
+font-family:Monospace;
+}
+
+h1 {
+font-family:Monospace;
+color:#D6D5A8;
 }
 
 
@@ -54,22 +69,35 @@ background-color : #E7CBA9;
 
 .centered {
   margin-top:2%;
-  background-color:#ada193;
-  width:50%;
-  margin-left:25%;
-  border-top-left-radius:10%;
-  border-top-right-radius:10%;
-  border-bottom-left-radius:0%;
-  border-bottom-right-radius:0%;
-}
-
-
-#searchContainer {
-  background-color: grey;
-  color: black;
+  background-color:#1B2430;
+  width: 80%;
   margin-left: auto;
   margin-right: auto;
-  width:90%;
+}
+
+#buttonHolder {
+   padding-top:5px;
+   margin-top:5px;
+   margin-right:10px;
+  float:right;
+}
+
+button.mat-raised-button:hover {
+    background-color: green;
+     height:50px;
+    width: 50px;
+}
+
+button.mat-raised-button {
+    height: 50px;
+    width: 50px;
+}
+
+#searchContainer {
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
+  width:85%;
   border-radius: 2%;
   margin-bottom: 5%;
   margin-top: 10%;
@@ -78,7 +106,7 @@ background-color : #E7CBA9;
 mat-form-field {
   margin-left: auto;
   margin-right: auto;
-  width: 80%;
+  width: 90%;
   height: 70%;
 }
 
@@ -87,13 +115,14 @@ table{
 }
 
 .mat-header-cell {
-  background-color: #BBB1A6;
-  color: black;
+  background-color: #1B2430;
+  color: white;
 }
 
 .mat-cell {
-    color: black;
+    color: white;
 }
+
 
 .mat-row {
   word-wrap: break-word !important;
@@ -102,7 +131,7 @@ table{
   width: 10% !important;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  background-color: #eee8e0;
+  background-color: #51557E;
   word-break: break-word;
   -ms-hyphens: auto;
   -moz-hyphens: auto;
