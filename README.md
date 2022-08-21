@@ -69,6 +69,7 @@ CREATE TABLE historical_prices (
  last_time TIMESTAMP NOT NULL, 
  CONSTRAINT productIDCon FOREIGN KEY ( url ) REFERENCES public.product ( url ) 
 ); 
+ALTER TABLE historical_prices ADD UNIQUE(url); 
 ```
 
 - A feature I would like to Add is have a historical_price where we just note a price and a product ID.

@@ -5,6 +5,7 @@ from database import DBConnector
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
+import logging
 
 app = FastAPI()
 origins = ["*"]
@@ -25,12 +26,7 @@ def root():
     Dummy method to ping.
     :return: Dict
     """
-    return {"Hello": "World"}
-
-
-@app.get("/products")
-def products():
-    return {"help": "Please ping /products/{item}"}
+    return {"Version": "1.0.1"}
 
 
 def get_data(item_name:str):
@@ -46,9 +42,12 @@ def get_data(item_name:str):
 
     # I was debugging this, I had it previously + ing the lists, but this is nicer to debug.
     db.perform_insert(tesco.products)
+    print("Done Tesco")
     db.perform_insert(supervalu.products)
+    print("Done SV")
     db.perform_insert(aldi.products)
-    db.perform_insert(tesco.historical + supervalu.historical + aldi.historical)
+    print("Done Aldi")
+    db.perform_insert(list(set(tesco.historical + supervalu.historical + aldi.historical)))
 
     # Todo, change this to be in memory representation we return rather than querying again from DB.
     return get_result_from_db(item_name)
@@ -104,5 +103,5 @@ if __name__ == "__main__":
     Start the fast API with SSL.
     """
     # Todo don't hardcode this, set by env vars.
-    #uvicorn.run(app, host="0.0.0.0", port=8000)
+    # uvicorn.run(app, host="0.0.0.0", port=8000)
     uvicorn.run(app, host="0.0.0.0", port=8000, ssl_keyfile="/ssl/key.pem", ssl_certfile="/ssl/cert.pem")

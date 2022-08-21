@@ -1,17 +1,18 @@
+import os
 import psycopg2
-import datetime
 from datetime import date
 today = date.today()
 
-import os
 
 # TODO SET ENV VAR
 PRICE_DAYS_BACK = 5
+DB_PASS = os.getenv("DB_PASS","pass")
+
 
 class DBConnector:
 
     def __init__(self):
-        self._conn_string = f"host='con-test.cygcjduv9tkp.eu-west-1.rds.amazonaws.com' dbname='shopping' user='postgres' password='{PASSWORD}'"
+        self._conn_string = f"host='con-test.cygcjduv9tkp.eu-west-1.rds.amazonaws.com' dbname='shopping' user='postgres' password='{DB_PASS}'"
         self._conn = psycopg2.connect(self._conn_string)
         self._cursor = self._conn.cursor()
 
@@ -31,21 +32,18 @@ class DBConnector:
 
     def get_item(self, item):
         try:
-            select = f"select id,description,retailer,price,url,last_updated from product where catagory like '{item.lower()}' order by price ASC limit (160);"
+            select = f"select id,description,retailer,price,url,last_updated from product where catagory like '{item.lower()}' order by last_updated ASC limit (160);"
             self._cursor.execute(select)
             return self._cursor.fetchall()
         except Exception as e:
             print(e)
 
-    def get_old(self):
-        select = f"select date_trunc('hour', last_updated),id,url, from product order by date_trunc('hour', last_updated) desc limit(1);"
-        self._cursor.execute(select)
-        return self._cursor.fetchall()
 
     def should_fetch_new(self, item):
         """
-        If this returns things, that means there are entries for that item within the past N days.
-        Therefore we don't need to get it again
+
+        Checks if data has been found within the past N days.
+
         :param item:
         :return:
         """
@@ -55,5 +53,7 @@ class DBConnector:
 
         # If there is no data returned by the cursor, that means we need to get some
         if data:
+            print(f"There is data within {PRICE_DAYS_BACK}")
             return False
+        print(f"No data for {item} within past {PRICE_DAYS_BACK}")
         return True
