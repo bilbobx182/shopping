@@ -1,79 +1,47 @@
-from common import perform_request, generate_insert,generate_historical
-import re
+from common import perform_request_tesco, standardise, replace_ownbrand, reg_replace
 
 
 class Tesco():
+    """
+    Class for Teco
+    """
 
-    historical = []
-    products = []
-
-    def __init__(self, compare_items):
-        self._compare_items = compare_items
-        self.get_tesco_products()
-
-    def get_brand(self, product_information):
-        return str(
-            product_information[0].split("SAVE")[0] if 'save' in product_information else {product_information[0]})
-
-    def remove_suggestions(self, brand):
-        return str(brand.split("Cheaper")[0] if "Cheaper alternatives" in brand else brand)
-
-    def remove_after_keyword(self, brand, search):
-        return str(brand.split(search)[0] if search in brand else brand)
-
-    def reg_replace(self, start, end, data):
+    def remove_garbage(self, raw_html):
         """
-        Method to replace substring between two start strings.
-        :param start: starting string ie hello
-        :param end: terminating string ie world
-        :param data: hello to another world this is ciaran.
-        :return: the string with everything gone between start and end : this is ciaran
+        Method to parse the tesco HTML text and make it useable data.
         """
-        reg = "(%s).*?(%s)" % (start, end)
-        r = re.compile(reg, re.DOTALL)
-        return r.sub('', data)
 
-    def format_data(self, data):
-        data = data.lower().replace("\n", "").replace("tesco", "ownbrand")
-        # TODO Tesco is _really_ painful to scrape. 100% there's a better way to do this.
-        # Clean this up in the future. I did this just to get it working, not working nicely.
-        if "was" not in data:
-            if "delivery" not in data:
-                if ("review" in data):
-                    data = self.reg_replace('write', 'shelf', data)
-                if "save" in data:
-                    data = self.reg_replace('save', 'now', self.reg_replace('offer', 'shelf', data))
-                if ("price match" in data):
-                    # Otherwise we have a long string with tesco repeating stuff
-                    product_info = data.replace("aldi price match", "")
-                    return product_info.split("€")[:2]
-                return data.split("€")
+        known_str = ["write a review", "aldi price match"]
+        for remove in known_str:
+            if remove in raw_html:
+                raw_html = raw_html.replace(remove, "")
 
-    def _get_brand(self, data):
-        return self.remove_after_keyword(
-            self.remove_after_keyword(self.remove_after_keyword(self.remove_suggestions
-                                                                (self.get_brand(data)), "SAVE"), "Any "),
-            "Buy any").replace("'", "").replace("{", "").replace("}", "").strip()
+        known_reg = [
+            {"start": "quantity", "end": "add"},
+            {"start": "rest", "end": "shelf"},
+            {"start": "clubcard", "end": "2023"},
+            {"start": "until", "end": "2023"}
+        ]
 
-    def get_tesco_products(self):
+        for remove in known_reg:
+            if remove['start'] and remove['end'] in raw_html:
+                raw_html = reg_replace(remove['start'], remove['end'], raw_html)
 
-        for catagory in self._compare_items:
-            soup = perform_request(f"https://www.tesco.ie/groceries/en-IE/search?query={catagory}")
-            for row in soup.find_all("li", {"class": "product-list--list-item"}):
-                desc = row.next_element.next_element.text.lower()
-                # TODO refactor this. It's really badly done just so it'd work.
-                # TODO since i was trying to figure out all edge cases one by one as I found them
-                # if not any(ignore_item in desc for ignore_item in list_of_ignore):
-                if 'unavailable' not in desc:
-                    if "selected range" not in desc:
-                        if "eachany" not in desc:
-                            url = f"https://www.tesco.ie{row.find_all('a')[0].attrs['href']}"
-                            product_info = self.format_data(desc)
-                            if product_info:
-                                try:
-                                    self.products.append(
-                                        generate_insert(catagory, self._get_brand(product_info), 'Tesco', product_info,
-                                                        url))
-                                    self.historical.append(generate_historical(product_info,url))
-                                except Exception as e:
-                                    print(f"Couldn't do prices right {e}")
+        product_info = raw_html.split("€")
+        product_info[0] = standardise(replace_ownbrand(product_info[0], "tesco"))
+        product_info.append("tesco")
+        # [product, price , price per kg, tesco]
+        return product_info
+
+    def search_product(self, product):
+        """
+        Product : String of the item you want from the shops.
+        """
+        params = {
+            'query': product,
+            'icid': 'tescohp_sws-1_m-sug_in-cola_out-cola',
+        }
+        soup = perform_request_tesco('https://www.tesco.ie/groceries/en-IE/search', params)
+        for row in soup.find_all("li", {"class": "product-list--list-item"}):
+            raw_html = row.next_element.next_element.text.lower()
+            self.remove_garbage(raw_html)

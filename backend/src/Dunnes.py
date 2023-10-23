@@ -38,7 +38,7 @@ class Dunnes():
         dunnes_product = self.remove_if(dunnes_product, "view deal")
         return dunnes_product
 
-    def get_products(self,product):
+    def search_product(self,product):
         self.driver = Driver()
 
         url = f"https://www.dunnesstoresgrocery.com/sm/delivery/rsid/258/results?q={product}"
@@ -54,10 +54,3 @@ class Dunnes():
             except IndexError as e:
                 continue
         self.driver.finish()
-
-
-dunnes = Dunnes()
-# dunnes.remove_garbage("'Coca-Cola Classic 1.5L, €3.10 \n Coca-Cola\n Buy 3 for €5 \n Coca-Cola Classic 1.5L \n Open product description \n €3.10 \n €2.07/l \n ADD TO CART \n View Deal \n'")
-dunnes.get_products("cola")
-dunnes.get_products("milk")
-dunnes.get_products("party mix")

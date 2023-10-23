@@ -1,4 +1,5 @@
 import requests
+import random
 from bs4 import BeautifulSoup
 from datetime import date
 import re
@@ -6,6 +7,19 @@ today = date.today()
 
 # dd/mm/YY
 DATE = today.strftime("%Y-%m-%d")
+
+
+def reg_replace(start, end, data):
+    """
+    Method to replace substring between two start strings.
+    :param start: starting string ie hello
+    :param end: terminating string ie world
+    :param data: hello to another world this is ciaran.
+    :return: the string with everything gone between start and end : this is ciaran
+    """
+    reg = "(%s).*?(%s)" % (start, end)
+    r = re.compile(reg, re.DOTALL)
+    return r.sub('', data)
 
 
 def cleanse(data):
@@ -38,6 +52,10 @@ def generate_insert(catagory,item,shop,data,url,brand=None,sku=None):
 
     return rstr
 
+
+def standardise(data):
+    return remove_currency(cleanse(data))
+
 def generate_historical(data,url):
     price = f"{(data[1].strip())}"
     rstr = f"INSERT into historical_prices values (DEFAULT,'{url}','{price}','{DATE}');"
@@ -45,5 +63,18 @@ def generate_historical(data,url):
 
 
 def perform_request(url):
-    result = requests.get(url)
+    return BeautifulSoup(requests.get(url=url),"html.parser")
+
+def perform_request_tesco(url,param):
+    # For now, seperate, we can fixup later
+    agent = f"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/{random.randint(5, 500)}.{random.randint(5, 100)} (KHTML, like Gecko) Chrome/{random.randint(100, 120)}.0.{random.randint(5, 5000)}.{random.randint(100, 120)} Safari/{random.randint(100, 520)}.{random.randint(1, 120)}"
+
+    head = {
+            'User-Agent': agent,
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.5',
+            'Connection': 'keep-alive',
+            'Upgrade-Insecure-Requests': '1'
+    }
+    result = requests.get(url=url, headers=head, params=param)
     return BeautifulSoup(result.content, "html.parser")

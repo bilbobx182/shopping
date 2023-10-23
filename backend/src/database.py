@@ -6,7 +6,7 @@ today = date.today()
 
 # TODO SET ENV VAR
 PRICE_DAYS_BACK = 5
-DB_PASS = os.getenv("DB_PASS","pass")
+DB_PASS = os.getenv("DB_PASS","unlockthesky")
 
 
 class DBConnector:
@@ -22,13 +22,13 @@ class DBConnector:
         :param insert_data:
         :return:
         """
-        try:
-            for item in insert_data:
+        for item in insert_data:
+            try:
                 print(item)
                 self._cursor.execute(item)
                 self._conn.commit()
-        except Exception as e:
-            print(e)
+            except Exception as e:
+                print(e)
 
     def get_item(self, item):
         try:

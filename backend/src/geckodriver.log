@@ -1,0 +1,43 @@
+1697984176157	geckodriver	INFO	Listening on 127.0.0.1:63039
+1697984176694	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/App ... s" "localhost" "-foreground" "-no-remote" "-profile" "/var/folders/s1/rntdtc892lj3f7n_c3fr09440000gn/T/rust_mozprofileYt6BMl"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1697984177878	Marionette	INFO	Marionette enabled
+console.error: "Warning: unrecognized command line flag" "-remote-allow-hosts"
+1697984178655	Marionette	INFO	Listening on port 63047
+Read port: 63047
+Read port: 63047
+WebDriver BiDi listening on ws://127.0.0.1:63040
+1697984180570	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+DevTools listening on ws://127.0.0.1:63040/devtools/browser/ac6d6da7-1638-4dcf-8c9e-a0f29c892f03
+JavaScript warning: https://www.tesco.ie/X6rU/mshJ/MoP42/2JaAw/N35rrmazzO/Zj0JAg/Ijd/DOFZkMFEB, line 1: unreachable code after return statement
+JavaScript warning: https://www.tesco.ie/X6rU/mshJ/MoP42/2JaAw/N35rrmazzO/Zj0JAg/Ijd/DOFZkMFEB, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://www.tesco.ie/X6rU/mshJ/MoP42/2JaAw/N35rrmazzO/Zj0JAg/Ijd/DOFZkMFEB, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://www.tesco.ie/X6rU/mshJ/MoP42/2JaAw/N35rrmazzO/Zj0JAg/Ijd/DOFZkMFEB, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.tesco.ie."
+1697984188967	Marionette	INFO	Stopped listening on port 63047
+1697984224696	geckodriver	INFO	Listening on 127.0.0.1:63141
+1697984224730	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/App ... s" "localhost" "-foreground" "-no-remote" "-profile" "/var/folders/s1/rntdtc892lj3f7n_c3fr09440000gn/T/rust_mozprofilecgEDKg"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1697984225928	Marionette	INFO	Marionette enabled
+console.error: "Warning: unrecognized command line flag" "-remote-allow-hosts"
+1697984226373	Marionette	INFO	Listening on port 63147
+Read port: 63147
+Read port: 63147
+WebDriver BiDi listening on ws://127.0.0.1:63142
+1697984228174	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+DevTools listening on ws://127.0.0.1:63142/devtools/browser/6a12104d-c346-4334-9ec8-efee3daeb55d
+JavaScript warning: https://www.tesco.ie/X6rU/mshJ/MoP42/2JaAw/N35rrmazzO/Zj0JAg/Ijd/DOFZkMFEB, line 1: unreachable code after return statement
+JavaScript warning: https://www.tesco.ie/X6rU/mshJ/MoP42/2JaAw/N35rrmazzO/Zj0JAg/Ijd/DOFZkMFEB, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://www.tesco.ie/X6rU/mshJ/MoP42/2JaAw/N35rrmazzO/Zj0JAg/Ijd/DOFZkMFEB, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://www.tesco.ie/X6rU/mshJ/MoP42/2JaAw/N35rrmazzO/Zj0JAg/Ijd/DOFZkMFEB, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.tesco.ie."
+JavaScript error: https://www.tesco.ie/groceries/en-IE/search?query=milk, line 32: ChunkLoadError: Loading chunk 692 failed.
+(error: https://js-agent.newrelic.com/692.215647de-1223.js)
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
