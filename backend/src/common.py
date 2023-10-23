@@ -22,6 +22,11 @@ def reg_replace(start, end, data):
     return r.sub('', data)
 
 
+def remove_string_from_number(data):
+    data = re.findall(r'[ -](\d+(?:\.\d+)?)', data)
+    return data[0]
+
+
 def cleanse(data):
     return re.sub(r"[^a-zA-Z0-9]+", ' ', data).lower()
 

@@ -10,6 +10,8 @@ class Tesco():
         """
         Method to parse the tesco HTML text and make it useable data.
         """
+        if "toggle" in raw_html:
+            return None
 
         known_str = ["write a review", "aldi price match"]
         for remove in known_str:
@@ -29,14 +31,14 @@ class Tesco():
 
         product_info = raw_html.split("€")
         product_info[0] = standardise(replace_ownbrand(product_info[0], "tesco"))
-        product_info.append("tesco")
-        # [product, price , price per kg, tesco]
+        # [product, price , price per kg]
         return product_info
 
     def search_product(self, product):
         """
         Product : String of the item you want from the shops.
         """
+        resp = []
         params = {
             'query': product,
             'icid': 'tescohp_sws-1_m-sug_in-cola_out-cola',
@@ -44,4 +46,14 @@ class Tesco():
         soup = perform_request_tesco('https://www.tesco.ie/groceries/en-IE/search', params)
         for row in soup.find_all("li", {"class": "product-list--list-item"}):
             raw_html = row.next_element.next_element.text.lower()
-            self.remove_garbage(raw_html)
+            cleaned = self.remove_garbage(raw_html)
+            if cleaned:
+                print(f"Tesco, {cleaned[0]},{cleaned[1]}")
+
+                resp.append({
+                    'brand' : Tesco,
+                    'catagory' : product,
+                    'product' : cleaned[0],
+                    'price' :  cleaned[1]
+                })
+        return resp

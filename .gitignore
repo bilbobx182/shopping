@@ -38,7 +38,7 @@ yarn-error.log
 # rollup-test output
 /modules/rollup-test/dist/
 
-venv/
+venv/*
 
 # User specific bazel settings
 .bazelrc.user

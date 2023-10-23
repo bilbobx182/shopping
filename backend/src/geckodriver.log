@@ -41,3 +41,61 @@ Exiting due to channel error.
 Exiting due to channel error.
 Exiting due to channel error.
 Exiting due to channel error.
+1698086599405	geckodriver	INFO	Listening on 127.0.0.1:55372
+1698086599919	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/App ... s" "localhost" "-foreground" "-no-remote" "-profile" "/var/folders/s1/rntdtc892lj3f7n_c3fr09440000gn/T/rust_mozprofilewNVjjM"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1698086600482	Marionette	INFO	Marionette enabled
+console.error: "Warning: unrecognized command line flag" "-remote-allow-hosts"
+1698086600947	Marionette	INFO	Listening on port 55382
+WebDriver BiDi listening on ws://127.0.0.1:55373
+Read port: 55382
+1698086601067	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+DevTools listening on ws://127.0.0.1:55373/devtools/browser/0a7f4101-df24-4e68-a9c0-07f12019db93
+1698086831724	geckodriver	INFO	Listening on 127.0.0.1:55695
+1698086832252	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/App ... s" "localhost" "-foreground" "-no-remote" "-profile" "/var/folders/s1/rntdtc892lj3f7n_c3fr09440000gn/T/rust_mozprofileIfyP1F"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1698086832746	Marionette	INFO	Marionette enabled
+console.error: "Warning: unrecognized command line flag" "-remote-allow-hosts"
+1698086832909	Marionette	INFO	Listening on port 55704
+Read port: 55704
+WebDriver BiDi listening on ws://127.0.0.1:55696
+1698086833256	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+DevTools listening on ws://127.0.0.1:55696/devtools/browser/0c5bdaaa-0692-4677-8f1a-fa1809082be9
+console.error: (new TypeError("watcher.browserElement.browsingContext is null", "resource://devtools/server/actors/watcher/target-helpers/frame-helper.js", 193))
+Handler function threw an exception: TypeError: browsingContext.currentWindowGlobal is null
+Stack: isChannelFromSystemPrincipal@resource://devtools/shared/network-observer/NetworkUtils.sys.mjs:89:1
+_createResource@resource://devtools/server/actors/network-monitor/network-event-actor.js:186:40
+NetworkEventActor@resource://devtools/server/actors/network-monitor/network-event-actor.js:104:27
+onNetworkEvent@resource://devtools/server/actors/resources/network-events.js:284:19
+#createNetworkEvent@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:684:46
+@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:342:33
+makeInfallible/<@resource://devtools/shared/DevToolsInfaillibleUtils.sys.mjs:43:22
+Line: 89, column: 1
+console.error: (new TypeError("browsingContext.currentWindowGlobal is null", "resource://devtools/shared/network-observer/NetworkUtils.sys.mjs", 89))
+Handler function threw an exception: TypeError: browsingContext.currentWindowGlobal is null
+Stack: isChannelFromSystemPrincipal@resource://devtools/shared/network-observer/NetworkUtils.sys.mjs:89:1
+_createResource@resource://devtools/server/actors/network-monitor/network-event-actor.js:186:40
+NetworkEventActor@resource://devtools/server/actors/network-monitor/network-event-actor.js:104:27
+onNetworkEvent@resource://devtools/server/actors/resources/network-events.js:284:19
+#createNetworkEvent@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:684:46
+#onRequestHeader@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:728:29
+@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:604:28
+makeInfallible/<@resource://devtools/shared/DevToolsInfaillibleUtils.sys.mjs:43:22
+Line: 89, column: 1
+console.error: (new TypeError("browsingContext.currentWindowGlobal is null", "resource://devtools/shared/network-observer/NetworkUtils.sys.mjs", 89))
+Handler function threw an exception: TypeError: browsingContext.currentWindowGlobal is null
+Stack: isChannelFromSystemPrincipal@resource://devtools/shared/network-observer/NetworkUtils.sys.mjs:89:1
+_createResource@resource://devtools/server/actors/network-monitor/network-event-actor.js:186:40
+NetworkEventActor@resource://devtools/server/actors/network-monitor/network-event-actor.js:104:27
+onNetworkEvent@resource://devtools/server/actors/resources/network-events.js:284:19
+#createNetworkEvent@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:684:46
+@resource://devtools/shared/network-observer/NetworkObserver.sys.mjs:337:33
+makeInfallible/<@resource://devtools/shared/DevToolsInfaillibleUtils.sys.mjs:43:22
+Line: 89, column: 1
+console.error: (new TypeError("browsingContext.currentWindowGlobal is null", "resource://devtools/shared/network-observer/NetworkUtils.sys.mjs", 89))
+1698086918821	Marionette	INFO	Stopped listening on port 55704
+console.error: "Failed to fetch https://spocs.getpocket.com/user:" "NetworkError when attempting to fetch resource."
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+1698087401040	Marionette	INFO	Stopped listening on port 55382
