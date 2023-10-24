@@ -25,7 +25,6 @@ class Dunnes():
         for row in soup.find_all("div", {"class": "ColListing--1fk1zey bPxMbf"}):
             try:
                 cleaned = self.remove_garbage(row.text)
-                # print(f"Dunnes, {product} , {cleaned[0]}, {cleaned[1]}")
                 resp.append({
                     'brand' : "Dunnes",
                     'catagory' : product,

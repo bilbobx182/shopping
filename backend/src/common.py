@@ -69,10 +69,29 @@ def generate_insert(catagory,item,shop,data,url,brand=None,sku=None):
     return rstr
 
 
+def standardise_liquid(data):
+    """
+    Liquid units are labeled differently.
+    This formats them to be "product number litre"
+    """
+    pattern = r'\b(\d+)\s*(?:ltr|l|litre)\b'
+    match = re.findall(pattern, data, re.IGNORECASE)
+    if match:
+        data = data[:data.index(match[0])+1] + " litre"
+
+    # I don't like it but regex won't work
+    if "ltr" in data:
+        data = data[:data.index('ltr') -1] + " " + data[data.index('ltr') -1] + " litre"
+
+    return data
+
+
 def standardise(data):
+    data = standardise_liquid(data)
     data = remove_currency(cleanse(data))
     # Remove countries we want standardised data
     return replace_if(data, ["irish"])
+
 
 def generate_historical(data,url):
     price = f"{(data[1].strip())}"

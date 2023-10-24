@@ -2,29 +2,29 @@ from Dunnes import Dunnes
 from Tesco import Tesco
 from common import perform_request_tesco
 from ai_magic import get_similar
-catagories = [
-              "porridge",
-              "cereal",
-              "Potato",
-              "beans",
-              "Eggs",
-              "Blueberry",
-              "garlic",
-              "olive oil",
-              "tofu",
-              "lemon",
-              "lime",
-              "onion",
-              "Grape",
-              "Tomato",
-              "bread",
-              "Nuts",
-              "Chocolate",
-              "milk",
-              "Monster",
-              "Red Bull",
-              "butter",
-              "pasta"]
+catagories = ["milk"]
+              # "porridge",
+              # "cereal",
+              # "Potato",
+              # "beans",
+              # "Eggs",
+              # "Blueberry",
+              # "garlic",
+              # "olive oil",
+              # "tofu",
+              # "lemon",
+              # "lime",
+              # "onion",
+              # "Grape",
+              # "Tomato",
+              # "bread",
+              # "Nuts",
+              # "Chocolate",
+              # "milk",
+              # "Monster",
+              # "Red Bull",
+              # "butter",
+              # "pasta"]
 
 dunnes = Dunnes()
 tesco = Tesco()

@@ -23,7 +23,7 @@ def render_similarities(similarities,data):
     # Sort the similarities by distance
     similarities.sort(key=lambda x: x[1])
 
-    for i, (index_pair, distance) in enumerate(similarities[:3]):
+    for i, (index_pair, distance) in enumerate(similarities[:10]):
         i, j = index_pair
         # print(f"{i} and {j} with Levenshtein Distance: {distance}")
         # print(data[i])
