@@ -1,29 +1,31 @@
-from common import replace_ownbrand,remove_currency,generate_insert,generate_historical,perform_request
+from common import replace_ownbrand, perform_request, standardise, remove_currency, replace_if, split_at_letters
 
 
 class Supervalu():
 
-    products = []
-    historical = []
-    def __init__(self,catagories):
-        self._catagories = catagories
-        self.get_supervalu_products()
+    def remove_garbage(self, raw_product):
+        raw_product = raw_product.split("a Day")[0].split(",")
+        super_product = replace_ownbrand(standardise(raw_product[0]), "supervalu")
+        super_product = replace_if(super_product, ['signature tastes'])
+        price = remove_currency(split_at_letters(raw_product[1]))
+        return [super_product, float(price)]
 
-    def get_supervalu_products(self):
-        for catagory in self._catagories:
-            soup = perform_request(f'https://shop.supervalu.ie/shopping/search/allaisles?q={catagory}')
-            for product in soup.find_all("div", {"id": "search-all-aisles-listings-view"})[0].contents:
-                try:
-                    if "LISTING-MID-0" not in product.text:
-                        data = remove_currency(replace_ownbrand(
-                            product.text.split("\n\n\n\n\n\n\n")[3].replace("\n", "").replace("                ",
-                                                                                              "").strip(),
-                            "supervalu")).split("    ")
-                        item = (data[0])
-                        url = product.find_all('a')[0].attrs['href']
-                        self.products.append(generate_insert(catagory, item, 'SuperValu', data,url))
-                        self.historical.append(generate_historical(data, url))
-                except AttributeError as e:
-                    continue
-                except IndexError as e:
-                    continue
+
+    def search_product(self,product):
+        result = []
+        soup = perform_request(f'https://shop.supervalu.ie/sm/delivery/rsid/5550/results?q={product}')
+
+        for product in soup.find_all("div", {"class": "ColListing--1fk1zey iowyBD"}):
+            try:
+                cleaned = self.remove_garbage(product.text)
+                result.append({
+                    'brand': "SuperValu",
+                    'catagory': product,
+                    'product': cleaned[0],
+                    'price': cleaned[1]
+                })
+            except AttributeError as e:
+                continue
+            except IndexError as e:
+                continue
+        return result

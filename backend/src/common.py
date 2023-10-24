@@ -9,6 +9,12 @@ today = date.today()
 DATE = today.strftime("%Y-%m-%d")
 
 
+def split_at_letters(data):
+    match = re.search(r'[a-zA-Z]', data)
+    if match:
+        split_index = match.start()
+        return data[:split_index]
+
 def reg_replace(start, end, data):
     """
     Method to replace substring between two start strings.
@@ -102,7 +108,8 @@ def generate_historical(data,url):
 
 
 def perform_request(url):
-    return BeautifulSoup(requests.get(url=url),"html.parser")
+    resp = requests.get(url=url)
+    return BeautifulSoup(resp.content, "html.parser")
 
 def perform_request_tesco(url,param):
     # For now, seperate, we can fixup later
