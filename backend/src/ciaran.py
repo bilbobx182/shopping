@@ -1,12 +1,14 @@
 from Dunnes import Dunnes
 from Tesco import Tesco
+from Aldi import Aldi
 from common import perform_request_tesco
 from ai_magic import get_similar
-catagories = ["milk"]
+# catagories = [
               # "porridge",
               # "cereal",
               # "Potato",
               # "beans",
+               # "Milk",
               # "Eggs",
               # "Blueberry",
               # "garlic",
@@ -28,8 +30,11 @@ catagories = ["milk"]
 
 dunnes = Dunnes()
 tesco = Tesco()
-for product in catagories:
-    dunnes_products = dunnes.search_product(product)
-    tesco_products = tesco.search_product(product)
-    combined = [*dunnes_products, *tesco_products]
-    get_similar(combined)
+aldi = Aldi()
+for product in ["Tomato"]:
+    res = aldi.search_product(product)
+    print(res)
+    # dunnes_products = dunnes.search_product(product)
+    # tesco_products = tesco.search_product(product)
+    # combined = [*dunnes_products, *tesco_products]
+    # get_similar(combined)

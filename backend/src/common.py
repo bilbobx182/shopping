@@ -87,7 +87,9 @@ def standardise_liquid(data):
 
 
 def standardise(data):
-    data = standardise_liquid(data)
+    # data = standardise_liquid(data)
+    data = data.replace("'","")
+
     data = remove_currency(cleanse(data))
     # Remove countries we want standardised data
     return replace_if(data, ["irish"])
