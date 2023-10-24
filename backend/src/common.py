@@ -22,6 +22,17 @@ def reg_replace(start, end, data):
     return r.sub('', data)
 
 
+def replace_if(data, conditions):
+    """
+    Not all of the returned data has the same values.
+    Therefore we need to check if it's there then delete.
+    """
+
+    for remove in conditions:
+        if remove in data:
+            data = data.replace(remove, "")
+    return data
+
 def remove_string_from_number(data):
     data = re.findall(r'[ -](\d+(?:\.\d+)?)', data)
     return data[0]
@@ -59,7 +70,9 @@ def generate_insert(catagory,item,shop,data,url,brand=None,sku=None):
 
 
 def standardise(data):
-    return remove_currency(cleanse(data))
+    data = remove_currency(cleanse(data))
+    # Remove countries we want standardised data
+    return replace_if(data, ["irish"])
 
 def generate_historical(data,url):
     price = f"{(data[1].strip())}"

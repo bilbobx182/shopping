@@ -1,4 +1,4 @@
-from common import perform_request_tesco, standardise, replace_ownbrand, reg_replace
+from common import perform_request_tesco, standardise, replace_ownbrand, reg_replace, replace_if
 
 
 class Tesco():
@@ -13,10 +13,15 @@ class Tesco():
         if "toggle" in raw_html:
             return None
 
-        known_str = ["write a review", "aldi price match"]
-        for remove in known_str:
-            if remove in raw_html:
-                raw_html = raw_html.replace(remove, "")
+        if "out of stock" in raw_html:
+            return None
+
+        if "meal deal" in raw_html:
+            # Don't want to deal with this ignore for now
+            return None
+
+        raw_html = replace_if(raw_html, ["write a review", "aldi price match"])
+
 
         known_reg = [
             {"start": "quantity", "end": "add"},
@@ -48,10 +53,10 @@ class Tesco():
             raw_html = row.next_element.next_element.text.lower()
             cleaned = self.remove_garbage(raw_html)
             if cleaned:
-                print(f"Tesco, {cleaned[0]},{cleaned[1]}")
+                # print(f"Tesco, {product}, {cleaned[0]},{cleaned[1]}")
 
                 resp.append({
-                    'brand' : Tesco,
+                    'brand' : 'Tesco',
                     'catagory' : product,
                     'product' : cleaned[0],
                     'price' :  cleaned[1]

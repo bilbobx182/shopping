@@ -1,5 +1,5 @@
 from common import replace_ownbrand,remove_currency,perform_request_tesco,\
-    reg_replace,remove_string_from_number, standardise
+    reg_replace,remove_string_from_number, standardise, replace_if
 
 
 class Dunnes():
@@ -7,22 +7,14 @@ class Dunnes():
     The Dunnes class
     """
 
-    def remove_if(self, product, condition):
-        if condition not in product:
-            return product
-        product.remove(condition)
-        return product
-
     def remove_garbage(self, raw_product):
-        raw_product = raw_product.split("<br/>")
-        raw_product = raw_product[0]
-        if "<b>Features</b>" in raw_product:
-            raw_product.replace("<b>Features</b>","")
+        raw_product = raw_product.split("<br/>")[0]
 
+        raw_product = replace_if(raw_product, ["<b>Features</b>"])
         dunnes_product = reg_replace("<br/>", "Cart", raw_product)
 
         dunnes_product = dunnes_product.split(",")
-        dunnes_product[0] = replace_ownbrand(standardise(dunnes_product[0]), "dunnes")
+        dunnes_product[0] = replace_ownbrand(standardise(dunnes_product[0]), "dunnes stores")
         dunnes_product[1] = remove_string_from_number(remove_currency(dunnes_product[1]))
         return dunnes_product
 
@@ -33,7 +25,7 @@ class Dunnes():
         for row in soup.find_all("div", {"class": "ColListing--1fk1zey bPxMbf"}):
             try:
                 cleaned = self.remove_garbage(row.text)
-                print(f"Dunnes, {product} , {cleaned[0]}, {cleaned[1]}")
+                # print(f"Dunnes, {product} , {cleaned[0]}, {cleaned[1]}")
                 resp.append({
                     'brand' : "Dunnes",
                     'catagory' : product,
@@ -44,3 +36,5 @@ class Dunnes():
                 continue
             except IndexError as e:
                 continue
+            finally:
+                return resp
