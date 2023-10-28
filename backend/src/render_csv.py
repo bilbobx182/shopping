@@ -46,10 +46,10 @@ with open(FILENAME, 'w') as sys.stdout:
             tesco_prod = tesco.search_product(product)
             try:
                 if STATS:
-                    stats(dunnes_products['meta'], 'dunnes', product)
-                    stats(aldi_prod['meta'], 'aldi', product)
-                    stats(super_prod['meta'], 'supervalu', product)
-                    stats(tesco_prod['meta'], 'tesco', product)
+                    stats(dunnes_products['meta'], 'dunnes', product, now)
+                    stats(aldi_prod['meta'], 'aldi', product, now)
+                    stats(super_prod['meta'], 'supervalu', product, now)
+                    stats(tesco_prod['meta'], 'tesco', product, now)
                 else:
                     for result in [*aldi_prod['products'], *dunnes_products['products'], *tesco_prod['products'],
                                     *super_prod['products']]:
