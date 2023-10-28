@@ -53,6 +53,6 @@ with open(FILENAME, 'w') as sys.stdout:
                 else:
                     for result in [*aldi_prod['products'], *dunnes_products['products'], *tesco_prod['products'],
                                     *super_prod['products']]:
-                        print(result)
+                        print(f"{now},{result['brand']},{result['catagory']},{result['product']},{result['price']}")
             except Exception as e:
                 print()
