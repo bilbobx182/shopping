@@ -1,17 +1,17 @@
 ## Grocery checker!
-This project is a grocery store checker to scrape the websites to find the cheapest item in the stores.
-Also useful to track price changes over time as we store things every 30 days.
+This project was originally a project to get the cost of groceries by scraping sites and then rendering it on a lovely UI.
 
 ![Demo gif of the functionality in V1!](https://i.imgur.com/MlELo8J.gif)
-
-
 [Prototype demo and explanation on youtube](https://www.youtube.com/watch?v=R-QvetimMjE)
 
-## Why you should care about this project
+Since then, I've removed my AWS infrastructure, but I've kept the project alive.
+Right now I use it to render a CSV file to the terminal so that I can see which store is overall better.
+An example is this [google sheets page here](https://docs.google.com/spreadsheets/d/1nlqonXP0vKKTPQcIkuet2zFRE1RKPH6yNlCOKZy5a-c/edit?usp=sharing)
 
 ##### The buzzwords.
-Let's just get them out of the way here : Docker,Angular,Nginx,FastAPI,Python,AWS,Postgres,SSL,Certbot.
+Docker ,Angular, Nginx, FastAPI, Python, AWS, Postgres, SSL, Certbot.
 
+## Why you should care about this project
 This is the sales pitch about why this is cool, where the complexity is in the project.
 
 - Good example of multi-stage docker images.
@@ -88,7 +88,7 @@ ALTER TABLE historical_prices ADD UNIQUE(url);
 - [x] Added last updated field to the UI.
 - [x] URL colour changed.
 - [x] Fixed the CSS.
-
+- [x] Added rendering of a CSV to see prices.
 
 ## Things I'd like to do !
 
@@ -97,3 +97,10 @@ ALTER TABLE historical_prices ADD UNIQUE(url);
 - [ ] Add analytics tickers for what's going up and down in prices.
 - [ ] Add historical changes to a given product view.
 - [ ] Add metrics about what's most interesting.
+
+### How do I run it?
+As it stands right now I have it configured to render data to terminal.
+_note sometimes on macs docker networking may not be able to connect to the internet and this will do nothing_.
+`docker build -t grocer_back -f backend.Dockerfile .`
+`docker run grocer_back`
+`./bin/build.sh`

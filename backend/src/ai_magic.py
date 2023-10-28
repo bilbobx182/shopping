@@ -1,5 +1,3 @@
-
-# TODO use the below, to automatically compare the most common entities.
 def levenshtein_distance(s1, s2):
     if len(s1) < len(s2):
         return levenshtein_distance(s2, s1)
@@ -19,31 +17,27 @@ def levenshtein_distance(s1, s2):
 
     return previous_row[-1]
 
-def render_similarities(similarities,data):
-    # Sort the similarities by distance
-    similarities.sort(key=lambda x: x[1])
-
-    for i, (index_pair, distance) in enumerate(similarities[:10]):
-        i, j = index_pair
-        # print(f"{i} and {j} with Levenshtein Distance: {distance}")
-        # print(data[i])
-        # print(data[j])
-        if data[i]['price'] < data[j]['price']:
-            print(f'Cheaper! {data[i]}')
-        if data[j]['price'] < data[i]['price']:
-            print(f'Cheaper! {data[j]}')
-        if data[j]['price'] == data[i]['price']:
-            print(f'Same! {data[i]}, {data[j]}')
-
-
 
 def get_similar(data):
+    # Filter the data to include only different brands
+    filtered_data = [d for i, d in enumerate(data) if all(d['brand'] != other['brand'] for other in data[:i])]
+
+    # Calculate Levenshtein distances
     similarities = []
-    for i in range(len(data) - 1):
-        for j in range(i + 1, len(data)):
-            if data[i]['brand'] != data[j]['brand']:
-                product1 = data[i]['product']
-                product2 = data[j]['product']
-                distance = levenshtein_distance(product1, product2)
-                similarities.append(((i, j), distance))
-    render_similarities(similarities,data)
+
+    for i in range(len(filtered_data) - 1):
+        for j in range(i + 1, len(filtered_data)):
+            product1 = filtered_data[i]['product']
+            product2 = filtered_data[j]['product']
+            distance = levenshtein_distance(product1, product2)
+            similarities.append((i, j, distance, filtered_data[i]['price'], filtered_data[j]['price']))
+
+    # Sort similarities by price and lowest Levenshtein distance
+    similarities.sort(key=lambda x: (x[3] + x[4], x[2]))
+
+    for i, j, distance, price1, price2 in similarities:
+        product1 = filtered_data[i]['product']
+        product2 = filtered_data[j]['product']
+        price1 = filtered_data[i]['price']
+        price2 = filtered_data[j]['price']
+        print(f"{filtered_data[i]['brand']},{ filtered_data[i]['catagory']}, {product1}, {price1}, {filtered_data[j]['brand']},{ filtered_data[j]['catagory']} , {product2}, {price2}, {distance}")

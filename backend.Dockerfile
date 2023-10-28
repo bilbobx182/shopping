@@ -9,4 +9,6 @@ COPY ./backend/requirements.txt .
 RUN pip install -r requirements.txt
 
 EXPOSE 8000
-CMD ["python3","main.py"]
+# NO longer want to generate the FastAPI I want to generate a CSV.
+# CMD ["python3","main.py"]
+CMD ["python3", "render_csv.py"]
