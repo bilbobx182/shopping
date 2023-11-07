@@ -20,7 +20,7 @@ PROTEIN = ['chicken', 'salmon', 'beef', 'pork', 'sausages', 'steak', 'lamb', 'tu
 FATS = ['butter', 'mayo', 'olive oil', 'pate']
 BAD = ['chocolate', 'crisps', 'cola', 'fanta', 'monster', 'redbull', 'muffins', 'biscuits', 'cakes']
 
-FOOD_GROUPS = [GOOD, CARBS, DAIRY, PROTEIN, FATS, BAD]
+FOOD_GROUPS = [GOOD, CARBS,] #DAIRY, PROTEIN, FATS, BAD]
 
 
 

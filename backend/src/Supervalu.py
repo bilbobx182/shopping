@@ -5,15 +5,24 @@ from common import replace_ownbrand, perform_request, standardise, \
 class Supervalu():
 
     def remove_garbage(self, raw_product):
+
+        unit_price = raw_product.split("product description")[1].split("€")[2].split("/")[0]
+
         raw_product = raw_product.split("a Day")[0].replace(",", "").split("€")
         super_product = raw_product[0]
         super_product = replace_ownbrand(standardise(super_product), "supervalu")
         super_product = replace_if(super_product, ['signature tastes'])
+
         try:
-            price = remove_string_from_number(raw_product[1])
-            unit_price = float(raw_product[3].split("/")[0])
+            raw_price = raw_product[2].split(" ")[0]
+            if "/" in raw_price:
+                price = float(raw_price.split("/")[0])
+            else:
+                price = float(raw_price)
+
         except:
-            price = remove_string_from_number(raw_product[-1:][0])
+            price = float(raw_product[3].split(" ")[0])
+
         return [super_product.rstrip(), price, unit_price]
 
     def format_dict(self, product, cleaned):
@@ -22,7 +31,7 @@ class Supervalu():
             'catagory': product,
             'product': cleaned[0],
             'price': cleaned[1],
-            'unit': cleaned[2],
+            'unit_price': cleaned[2],
 
         }
 

@@ -6,23 +6,27 @@ class Dunnes():
     """
     The Dunnes class
     """
-
-    def remove_garbage(self, raw_product):
+    def get_unit(self, raw_product):
         raw_unit = raw_product.split("product description")[1].split("€")[2]
         if "each" in raw_unit:
-            unit_price = float(raw_unit.split("each")[0].strip())
-        else:
-            unit_price = float(raw_unit.split("/")[0])
-        raw_product = raw_product.split("<br/>")[0]
+            return float(raw_unit.split("each")[0].strip())
+        if "Deal" in raw_unit:
+            return float(raw_product.split("product description")[1].split("€")[1].split(" ")[0])
 
+        return float(raw_unit.split("/")[0])
+
+    def remove_garbage(self, raw_product):
+        result = []
+
+        unit_price = self.get_unit(raw_product)
+        raw_product = raw_product.split("<br/>")[0]
         raw_product = replace_if(raw_product, ["<b>Features</b>"])
         dunnes_product = reg_replace("<br/>", "Cart", raw_product)
-
         dunnes_product = dunnes_product.replace(",", "").split("€")
-        dunnes_product[0] = replace_ownbrand(dunnes_product[0], "dunnes stores")
-        dunnes_product[1] = remove_string_from_number(remove_currency(dunnes_product[1]))
-        dunnes_product[2] = unit_price
-        return dunnes_product
+        result.append(replace_ownbrand(dunnes_product[0], "dunnes stores"))
+        result.append(remove_string_from_number(remove_currency(dunnes_product[1])))
+        result.append(unit_price)
+        return result
 
     def format_dict(self, product, cleaned):
         return {
@@ -30,7 +34,7 @@ class Dunnes():
             'catagory': product,
             'product': cleaned[0],
             'price': cleaned[1],
-            'price': cleaned[2],
+            'unit_price': cleaned[2],
         }
 
     def search_product(self, product, is_csv=True):

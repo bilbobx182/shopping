@@ -29,7 +29,7 @@ class Aldi:
             'catagory': product,
             'product': aldi_product,
             'price': price,
-            'price_per_unit': price_per_unit
+            'unit_price': price_per_unit
         }
 
     def search_product(self, product, is_csv=True):
@@ -60,7 +60,7 @@ class Aldi:
                     aldi_product = replace_ownbrand(aldi_product, ownbrand)
 
             price = float(item['ListPrice'])
-            price_per_unit = float(item['UnitPrice'])
+            price_per_unit = float(item['UnitPrice'].replace("€",""))
             if is_csv:
                 resp['products'].append(self.format_dict(product, aldi_product, price, price_per_unit))
                 resp['meta'].append(price)

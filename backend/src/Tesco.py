@@ -12,6 +12,9 @@ class Tesco():
         if "toggle" in raw_html:
             return None
 
+        if "any" in raw_html:
+            return None
+
         if "out of stock" in raw_html:
             return None
 
@@ -47,7 +50,7 @@ class Tesco():
             'catagory': product,
             'product': cleaned[0],
             'price': cleaned[1],
-            'price_per_unit': cleaned[2]
+            'unit_price': cleaned[2]
         }
 
     def search_product(self, product, is_csv=True):
