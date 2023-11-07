@@ -73,25 +73,7 @@ def remove_alpha(product):
     result = re.sub(r'[^0-9.]', ' ', result)
     result = re.sub(r'\.+', '.', result)
     return result.strip().split(" ")
-def price_per_unit(price,company=None):
 
-    if company == 'tesco':
-        if len(price) == 3:
-            if ("litre" in price[2]):
-                return price[2].split("/")[0]
-
-    if company == 'dunnes':
-        unit = remove_alpha(price[0])
-        if len(unit) == 1 and "ml" in price[0]:
-            multiby = 1000 / float(unit[0])
-            return price[1] * multiby
-        if len(unit) == 1:
-            return price[1] / float(unit[0])
-        if len(unit) == 3:
-            # Return the price per litre if its  20 X 300ML
-            return price[1] / (float(unit[0]) * float(unit[2]) / 1000)
-
-    return ""
 
 def remove_after_keyword(data, key):
     return str(data.split(key)[0] if key in data else data)

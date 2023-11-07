@@ -27,7 +27,7 @@ FILENAME = f"{now}_shopping.csv"
 jobs = []
 
 # super.search_product("Cola")
-# dunnes.search_product("Cola")
+# dunnes.search_product("cola")
 tesco.search_product("onion")
 
 # def render_data(catagory):

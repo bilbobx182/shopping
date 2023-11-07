@@ -1,5 +1,5 @@
 from common import replace_ownbrand, perform_request, standardise, \
-    generate_insert, replace_if, remove_string_from_number, price_per_unit
+    generate_insert, replace_if, remove_string_from_number
 
 
 class Supervalu():

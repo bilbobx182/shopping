@@ -1,5 +1,5 @@
 from common import replace_ownbrand, remove_currency, perform_request_tesco, \
-    reg_replace, remove_string_from_number, standardise, replace_if, generate_insert, price_per_unit
+    reg_replace, remove_string_from_number, standardise, replace_if, generate_insert
 
 
 class Dunnes():
@@ -8,6 +8,11 @@ class Dunnes():
     """
 
     def remove_garbage(self, raw_product):
+        raw_unit = raw_product.split("product description")[1].split("€")[2]
+        if "each" in raw_unit:
+            unit_price = float(raw_unit.split("each")[0].strip())
+        else:
+            unit_price = float(raw_unit.split("/")[0])
         raw_product = raw_product.split("<br/>")[0]
 
         raw_product = replace_if(raw_product, ["<b>Features</b>"])
@@ -16,6 +21,7 @@ class Dunnes():
         dunnes_product = dunnes_product.replace(",", "").split("€")
         dunnes_product[0] = replace_ownbrand(dunnes_product[0], "dunnes stores")
         dunnes_product[1] = remove_string_from_number(remove_currency(dunnes_product[1]))
+        dunnes_product[2] = unit_price
         return dunnes_product
 
     def format_dict(self, product, cleaned):
@@ -23,7 +29,8 @@ class Dunnes():
             'brand': "dunnes",
             'catagory': product,
             'product': cleaned[0],
-            'price': cleaned[1]
+            'price': cleaned[1],
+            'price': cleaned[2],
         }
 
     def search_product(self, product, is_csv=True):
@@ -42,7 +49,6 @@ class Dunnes():
         for row in soup.find_all("div", {"class": "ColListing--1fk1zey bPxMbf"}):
             try:
                 cleaned = self.remove_garbage(row.text)
-                unit_price = price_per_unit(cleaned, company='dunnes')
 
                 if is_csv:
                     resp['products'].append(self.format_dict(product, cleaned))
