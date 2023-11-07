@@ -11,6 +11,19 @@ today = date.today()
 DATE = today.strftime("%Y-%m-%d")
 
 
+GOOD = ['carrots', 'brocolli', 'parsnip', 'peas', 'soup', 'salad',
+        'coriander', 'orange', 'apple', 'pear', 'onions', 'pineapple', 'pepper',
+        'cucumber', 'aubergine', 'tomato', 'banana', 'grape', 'cherry', 'strawberry']
+CARBS = ['potato', 'pasta', 'bread', 'baguette', 'pita', 'weetabix']
+DAIRY = ['milk', 'yogurt', 'cheese', 'gouda', 'feta']
+PROTEIN = ['chicken', 'salmon', 'beef', 'pork', 'sausages', 'steak', 'lamb', 'turkey', 'nuts', 'eggs', 'beans']
+FATS = ['butter', 'mayo', 'olive oil', 'pate']
+BAD = ['chocolate', 'crisps', 'cola', 'fanta', 'monster', 'redbull', 'muffins', 'biscuits', 'cakes']
+
+FOOD_GROUPS = [GOOD, CARBS, DAIRY, PROTEIN, FATS, BAD]
+
+
+
 def split_at_letters(data):
     match = re.search(r'[a-zA-Z]', data)
     if match:
@@ -54,6 +67,31 @@ def remove_string_from_number(data):
 def cleanse(data):
     return re.sub(r"[^a-zA-Z0-9]+", ' ', data).lower()
 
+
+def remove_alpha(product):
+    result = re.sub(r'[a-zA-Z]', "", product)
+    result = re.sub(r'[^0-9.]', ' ', result)
+    result = re.sub(r'\.+', '.', result)
+    return result.strip().split(" ")
+def price_per_unit(price,company=None):
+
+    if company == 'tesco':
+        if len(price) == 3:
+            if ("litre" in price[2]):
+                return price[2].split("/")[0]
+
+    if company == 'dunnes':
+        unit = remove_alpha(price[0])
+        if len(unit) == 1 and "ml" in price[0]:
+            multiby = 1000 / float(unit[0])
+            return price[1] * multiby
+        if len(unit) == 1:
+            return price[1] / float(unit[0])
+        if len(unit) == 3:
+            # Return the price per litre if its  20 X 300ML
+            return price[1] / (float(unit[0]) * float(unit[2]) / 1000)
+
+    return ""
 
 def remove_after_keyword(data, key):
     return str(data.split(key)[0] if key in data else data)

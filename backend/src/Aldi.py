@@ -23,12 +23,13 @@ class Aldi:
         ('limit', '200'),
     )
 
-    def format_dict(self, product, aldi_product, price):
+    def format_dict(self, product, aldi_product, price, price_per_unit):
         return {
             'brand': "Aldi",
             'catagory': product,
             'product': aldi_product,
-            'price': price
+            'price': price,
+            'price_per_unit': price_per_unit
         }
 
     def search_product(self, product, is_csv=True):
@@ -59,8 +60,9 @@ class Aldi:
                     aldi_product = replace_ownbrand(aldi_product, ownbrand)
 
             price = float(item['ListPrice'])
+            price_per_unit = float(item['UnitPrice'])
             if is_csv:
-                resp['products'].append(self.format_dict(product, aldi_product, price))
+                resp['products'].append(self.format_dict(product, aldi_product, price, price_per_unit))
                 resp['meta'].append(price)
             else:
                 generate_insert(product, aldi_product, 'aldi', price, f"https://groceries.aldi.ie{item['Url']}")

@@ -1,5 +1,5 @@
 from common import replace_ownbrand, remove_currency, perform_request_tesco, \
-    reg_replace, remove_string_from_number, standardise, replace_if, generate_insert
+    reg_replace, remove_string_from_number, standardise, replace_if, generate_insert, price_per_unit
 
 
 class Dunnes():
@@ -14,7 +14,7 @@ class Dunnes():
         dunnes_product = reg_replace("<br/>", "Cart", raw_product)
 
         dunnes_product = dunnes_product.replace(",", "").split("€")
-        dunnes_product[0] = replace_ownbrand(standardise(dunnes_product[0]), "dunnes stores")
+        dunnes_product[0] = replace_ownbrand(dunnes_product[0], "dunnes stores")
         dunnes_product[1] = remove_string_from_number(remove_currency(dunnes_product[1]))
         return dunnes_product
 
@@ -42,6 +42,8 @@ class Dunnes():
         for row in soup.find_all("div", {"class": "ColListing--1fk1zey bPxMbf"}):
             try:
                 cleaned = self.remove_garbage(row.text)
+                unit_price = price_per_unit(cleaned, company='dunnes')
+
                 if is_csv:
                     resp['products'].append(self.format_dict(product, cleaned))
                     resp['meta'].append(float(cleaned[1]))

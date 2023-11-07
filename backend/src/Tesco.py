@@ -1,4 +1,5 @@
-from common import perform_request_tesco, standardise, replace_ownbrand, reg_replace,remove_string_from_number,remove_currency, replace_if, generate_insert
+from common import perform_request_tesco, standardise, replace_ownbrand,\
+    reg_replace,remove_string_from_number,remove_currency, replace_if, generate_insert, price_per_unit
 class Tesco():
     """
     Class for Teco
@@ -39,13 +40,13 @@ class Tesco():
         return product_info
 
 
-    def format_dict(self, product,cleaned):
-        # print(f"Tesco, {product}, {cleaned[0]},{cleaned[1]}")
+    def format_dict(self, product,cleaned,price_per_unit):
         return {
             'brand': 'Tesco',
             'catagory': product,
             'product': cleaned[0],
-            'price': float(cleaned[1])
+            'price': float(cleaned[1]),
+            'price_per_unit' : 1
         }
 
     def search_product(self, product, is_csv=True):
@@ -69,7 +70,8 @@ class Tesco():
             cleaned = self.remove_garbage(raw_html)
             if cleaned:
                 if is_csv:
-                    resp['products'].append(self.format_dict(product, cleaned))
+                    unit_price = price_per_unit(cleaned,company='tesco')
+                    resp['products'].append(self.format_dict(product, cleaned,unit_price))
                     resp['meta'].append(float(cleaned[1]))
                 else:
                     generate_insert(product,cleaned[0],'tesco',cleaned[1], None)
