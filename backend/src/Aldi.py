@@ -1,5 +1,5 @@
 import json
-from common import standardise, generate_insert, replace_ownbrand
+from common import standardise, generate_insert, replace_ownbrand,round_up
 from FoodModel import Food
 
 import requests
@@ -59,8 +59,8 @@ class Aldi:
                 "company": "Aldi",
                 "category": product,
                 "product": aldi_product,
-                "price": price,
-                "unit_price":price_per_unit,
+                "price": round_up(price),
+                "unit_price":round_up(price_per_unit),
                 "url" : f"https://groceries.aldi.ie{item['Url']}",
                 }
             resp.append(Food(**data))

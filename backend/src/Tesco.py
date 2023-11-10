@@ -1,5 +1,5 @@
 from common import perform_request_tesco, standardise, replace_ownbrand,\
-    reg_replace,remove_string_from_number,remove_currency, replace_if, generate_insert
+    reg_replace,remove_string_from_number,remove_currency, replace_if, round_up
 
 from FoodModel import Food
 
@@ -55,8 +55,8 @@ class Tesco():
             'company': 'Tesco',
             'category': product,
             'product': cleaned[0],
-            'price': cleaned[1],
-            'unit_price': cleaned[2],
+            'price': round_up(cleaned[1]),
+            'unit_price': round_up(cleaned[2]),
             'url': url,
         }
 

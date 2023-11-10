@@ -1,5 +1,5 @@
 from common import replace_ownbrand, remove_currency, perform_request_tesco, \
-    reg_replace, remove_string_from_number, standardise, replace_if, generate_insert
+    reg_replace, remove_string_from_number, standardise, replace_if, round_up
 
 from FoodModel import Food
 
@@ -34,9 +34,9 @@ class Dunnes():
         return {
             'company': "dunnes",
             'category': product,
-            'product': cleaned[0],
-            'price': cleaned[1],
-            'unit_price': cleaned[2],
+            'product': standardise(cleaned[0]),
+            'price': round_up(cleaned[1]),
+            'unit_price': round_up(cleaned[2]),
             'url': url
         }
 

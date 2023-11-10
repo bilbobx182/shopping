@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 from datetime import date
 import re
 from statistics import median, mode, mean
+import math
 
 today = date.today()
 
@@ -82,6 +83,9 @@ def remove_after_keyword(data, key):
 def replace_ownbrand(data, brand):
     return data.lower().replace(brand, "ownbrand")
 
+
+def round_up(number):
+    return math.ceil(number * 100) / 100
 
 def remove_currency(data):
     return data.replace('€', "")
