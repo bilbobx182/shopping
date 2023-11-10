@@ -1,9 +1,8 @@
-from common import replace_ownbrand, standardise, \
-    generate_insert, replace_if, remove_string_from_number, replace_ownbrand, round_up
+from common import  standardise, remove_string_from_number, replace_ownbrand, round_up
 
 from FoodModel import Food
 import requests
-import random
+
 
 class Supervalu():
 

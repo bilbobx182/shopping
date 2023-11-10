@@ -1,6 +1,3 @@
-import datetime
-import os
-import sys
 from time import sleep
 from Dunnes import Dunnes
 from Tesco import Tesco
@@ -11,8 +8,6 @@ import itertools
 from generate_ranks import Ranks
 import multiprocessing
 from common import round_up
-
-jobs = []
 
 shops = {
     'Aldi': 0,
@@ -27,15 +22,13 @@ aldi = Aldi()
 super = Supervalu()
 
 
-
 food = ["mushroom", "Onions", "Garlic", "Tomato", "Peppers",
         "Parsnip", "Carrots", "Cheese", "Butter",
         "Milk", "Chicken", "Salmon", "Meatballs", "Tofu", "Eggs", "Turkey", "Rice", "Potato", "Bread", "Chocolate",
         "Cola"]
 
 
-prices = []
-def render_data(product):
+def generate_weekly_costs(product):
     aldi_prod = aldi.search_product(product)
     super_prod = super.search_product(product)
     dunnes_products = dunnes.search_product(product)
@@ -52,19 +45,19 @@ def render_data(product):
         print(e)
 
 
-if __name__ == '__main__':
-
-    food = ["mushroom", "cola"]
-
+def main():
+    prices = []
     num_processes = multiprocessing.cpu_count()
     with multiprocessing.Pool(processes=num_processes) as pool:
-        prices.extend(pool.map(render_data, food))
+        prices.extend(pool.map(generate_weekly_costs, food))
 
     prices = list(itertools.chain.from_iterable(prices))
-    print("Results:", prices)
 
     for item in prices:
         shops[item['company']] = round_up(shops[item['company']] + item['price'])
 
-
     print(shops)
+
+
+if __name__ == '__main__':
+    main()

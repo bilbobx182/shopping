@@ -1,5 +1,5 @@
 import json
-from common import standardise, generate_insert, replace_ownbrand,round_up
+from common import standardise, replace_ownbrand,round_up
 from FoodModel import Food
 
 import requests
@@ -35,7 +35,7 @@ class Aldi:
                 aldi_product = replace_ownbrand(aldi_product, ownbrand)
         return aldi_product
 
-    def search_product(self, product, is_csv=True):
+    def search_product(self, product):
         """
         Searches for product.
         product = Name of grocery we want.
