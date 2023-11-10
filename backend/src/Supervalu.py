@@ -43,7 +43,7 @@ class Supervalu():
             'url': f"https://shop.supervalu.ie/sm/delivery/rsid/5550/product/{item['description']}"
         }
 
-    def perform_request(self,product,super_data,page=1):
+    def perform_request(self,product,super_data,page=1,count=0):
         """
         Recursive pagination of the data
         """
@@ -78,7 +78,9 @@ class Supervalu():
 
         super_data.extend(resp['items'])
         if len(super_data) <= resp['total']:
-            self.perform_request(product, super_data, page+1)
+            if count > 3 :
+                return super_data
+            self.perform_request(product, super_data, page+1, count+1)
 
         return super_data
     def search_product(self, product):
