@@ -6,9 +6,8 @@ from Dunnes import Dunnes
 from Tesco import Tesco
 from Aldi import Aldi
 from Supervalu import Supervalu
-from common import stats,FOOD_GROUPS
+from common import stats, FOOD_GROUPS
 import multiprocessing
-
 
 dunnes = Dunnes()
 tesco = Tesco()
@@ -25,6 +24,7 @@ STATS = os.getenv("STATS", False)
 FILENAME = f"{now}_shopping.csv"
 
 jobs = []
+
 
 def render_data(catagory):
     file = open(FILENAME, 'a')
@@ -43,20 +43,26 @@ def render_data(catagory):
             else:
                 for result in [*aldi_prod['products'], *dunnes_products['products'], *tesco_prod['products'],
                                *super_prod['products']]:
-                    print(f"{now},{result['brand']},{result['catagory']},{result['product']},{result['price']},{result['unit_price']}")
+                    print(
+                        f"{now},{result['brand']},{result['catagory']},{result['product']},{result['price']},{result['unit_price']}")
         except Exception as e:
             print()
 
 
 if __name__ == '__main__':
-    #Used for debugging.
+    # Used for debugging.
     if False:
-        for catagory in FOOD_GROUPS:
-            for product in catagory:
-                tescopro = dunnes.search_product(product)
-                tescopro = tesco.search_product(product)
-                supedr = super.search_product(product)
-                aldir = aldi.search_product(product)
+        # Price per unit is hard. Aldi define things that have like 20g as the unit as 1g.
+        # Dunnes for alcohol, will set 1 unit = 1 bottle.
+        # Lots of edge casses.
+        tescopro = dunnes.search_product("grape")
+
+        # for catagory in FOOD_GROUPS:
+        #     for product in catagory:
+        #         tescopro = dunnes.search_product(product)
+        #         # tescopro = tesco.search_product(product)
+        #         # supedr = super.search_product(product)
+        #         # aldir = aldi.search_product(product)
 
     else:
         for catagory in FOOD_GROUPS:

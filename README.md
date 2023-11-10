@@ -90,13 +90,27 @@ ALTER TABLE historical_prices ADD UNIQUE(url);
 - [x] Fixed the CSS.
 - [x] Added rendering of a CSV to see prices.
 
+## Changes in V2
+
+- [x] Support CSV output.
+- [x] Support Dunnes stores.
+- [x] Enable ranking of companies for best products.
+- [x] Enable Grouping of products by store.
+- [x] Support price per unit for all stores.
+- [x] MultiProcessing supported to make things faster.
+
+
 ## Things I'd like to do !
 
+- [ ] Establish base list of requirements for a week.
+- [ ] Hyperlink URLs.
 - [ ] Weekly price seeding.
-- [ ] Add image rendering to frontend.
-- [ ] Add analytics tickers for what's going up and down in prices.
-- [ ] Add historical changes to a given product view.
-- [ ] Add metrics about what's most interesting.
+- [ ] What are each company promoting specials on.
+- 
+[//]: # (- [ ] Add image rendering to frontend.)
+[//]: # (- [ ] Add analytics tickers for what's going up and down in prices.)
+[//]: # (- [ ] Add historical changes to a given product view.)
+[//]: # (- [ ] Add metrics about what's most interesting.)
 
 ### How do I run it?
 As it stands right now I have it configured to render data to terminal.
