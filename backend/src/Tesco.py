@@ -1,5 +1,8 @@
 from common import perform_request_tesco, standardise, replace_ownbrand,\
     reg_replace,remove_string_from_number,remove_currency, replace_if, generate_insert
+
+from FoodModel import Food
+
 class Tesco():
     """
     Class for Teco
@@ -44,13 +47,17 @@ class Tesco():
         return product_info
 
 
-    def format_dict(self, product, cleaned):
+    def format_dict(self, product, cleaned, url):
+        """
+        Format dictionary so it can then be used in a model.
+        """
         return {
-            'brand': 'Tesco',
-            'catagory': product,
+            'company': 'Tesco',
+            'category': product,
             'product': cleaned[0],
             'price': cleaned[1],
-            'unit_price': cleaned[2]
+            'unit_price': cleaned[2],
+            'url': url,
         }
 
     def search_product(self, product, is_csv=True):
@@ -59,10 +66,7 @@ class Tesco():
         product = Name of grocery we want.
         is_csv: True, as when I run locally, I want to see it in terminal.
         """
-        resp = {
-            'products': [],
-            'meta': []
-        }
+        resp = []
 
         params = {
             'query': product,
@@ -71,12 +75,10 @@ class Tesco():
         soup = perform_request_tesco('https://www.tesco.ie/groceries/en-IE/search', params)
         for row in soup.find_all("li", {"class": "product-list--list-item"}):
             raw_html = row.next_element.next_element.text.lower()
+
+            url = f"https://www.tesco.ie/{row.find_all('a', href=True)[0].attrs['href']}"
             cleaned = self.remove_garbage(raw_html)
             if cleaned:
-                if is_csv:
-                    resp['products'].append(self.format_dict(product, cleaned))
-                    resp['meta'].append(float(cleaned[1]))
-                else:
-                    generate_insert(product,cleaned[0],'tesco',cleaned[1], None)
+                resp.append(Food(**self.format_dict(product, cleaned, url)))
 
         return resp

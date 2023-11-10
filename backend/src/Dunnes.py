@@ -1,6 +1,8 @@
 from common import replace_ownbrand, remove_currency, perform_request_tesco, \
     reg_replace, remove_string_from_number, standardise, replace_if, generate_insert
 
+from FoodModel import Food
+
 
 class Dunnes():
     """
@@ -28,37 +30,32 @@ class Dunnes():
         result.append(unit_price)
         return result
 
-    def format_dict(self, product, cleaned):
+    def format_dict(self, product, cleaned,url):
         return {
-            'brand': "dunnes",
-            'catagory': product,
+            'company': "dunnes",
+            'category': product,
             'product': cleaned[0],
             'price': cleaned[1],
             'unit_price': cleaned[2],
+            'url': url
         }
 
-    def search_product(self, product, is_csv=True):
+    def search_product(self, product):
         """
         Searches for product.
         product = Name of grocery we want.
         is_csv: True, as when I run locally, I want to see it in terminal.
         """
-        resp = {
-            'products': [],
-            'meta': []
-        }
+        resp = []
+
 
         url = f"https://www.dunnesstoresgrocery.com/sm/delivery/rsid/258/results"
         soup = perform_request_tesco(url, {'q': product})
-        for row in soup.find_all("div", {"class": "ColListing--1fk1zey bPxMbf"}):
+        for row in soup.find_all("div", {"class": "ColListing--1fk1zey liggLx"}):
             try:
+                url = row.find_all('a', href=True)[0].attrs['href']
                 cleaned = self.remove_garbage(row.text)
-
-                if is_csv:
-                    resp['products'].append(self.format_dict(product, cleaned))
-                    resp['meta'].append(float(cleaned[1]))
-                else:
-                    generate_insert(product, cleaned[0], 'dunnes', cleaned[1], None)
+                resp.append(Food(**self.format_dict(product, cleaned, url)))
 
             except AttributeError as e:
                 continue
