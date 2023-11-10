@@ -124,7 +124,7 @@ class Supervalu():
         is_csv: True, as when I run locally, I want to see it in terminal.
         """
         resp = []
-
+        print(f"searching {product}")
         for item in self.perform_request(product,[]):
             try:
                 resp.append(Food(**self.format_dict(product, item)))
