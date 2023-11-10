@@ -40,7 +40,7 @@ class Supervalu():
             'product': item['description'],
             'price': item['priceNumeric'],
             'unit_price': unit ,
-            'url': f"https://shop.supervalu.ie/sm/delivery/rsid/5550/product/{item}"
+            'url': f"https://shop.supervalu.ie/sm/delivery/rsid/5550/product/{item['description']}"
         }
 
     def perform_request(self,product,super_data,page=1):

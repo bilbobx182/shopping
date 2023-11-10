@@ -14,11 +14,11 @@ tesco = Tesco()
 aldi = Aldi()
 super = Supervalu()
 
-food = ["mushroom", "Onions", "Garlic", "Tomatoe", "Peppers", "Cauliflower",
+food = ["mushroom", "Onions", "Garlic", "Tomato", "Peppers", "Cauliflower",
         "Parsnip", "Carrots", "Cheese", "Butter",
         "Milk", "Chicken", "Salmon", "Meatballs", "Tofu", "Eggs", "Turkey", "Rice", "Potato", "Bread", "Chocolate",
         "Cola"]
 
 
-res = super.search_product(food[0])
+res = super.search_product(food[0].lower())
 print(res)
