@@ -102,11 +102,11 @@ def generate_historical(data, url):
     return rstr
 
 
-def stats(data, brand, catagory, now):
+def stats(data, brand, category, now, unit_price):
     """
     Method used by render_csv to display the data to terminal.
     """
-    print(f"{brand},{now}, {catagory},{len(data)} , {mean(data)}, {median(data)} ,{mode(data)}")
+    print(f"{now}, {category}, {brand}, {len(data)} , {mean(data)}, {median(data)} ,{mode(data)}, {unit_price}")
 
 
 def perform_request(url):

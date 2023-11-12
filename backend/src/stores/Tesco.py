@@ -19,7 +19,7 @@ def format_dict(product, cleaned, url):
     }
 
 
-class Tesco():
+class Tesco:
     """
     Class for Teco
     """

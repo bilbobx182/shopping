@@ -3,10 +3,10 @@ import itertools
 import random
 from time import sleep
 
-from Dunnes import Dunnes
-from Tesco import Tesco
-from Aldi import Aldi
-from Supervalu import Supervalu
+from stores.Dunnes import Dunnes
+from stores.Tesco import Tesco
+from stores.Aldi import Aldi
+from stores.Supervalu import Supervalu
 from constants import WAIT_TIME, SUPERVALU, DUNNES, ALDI, TESCO
 from generate_ranks import Ranks
 from common import round_up

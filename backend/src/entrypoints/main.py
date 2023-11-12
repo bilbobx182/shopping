@@ -1,12 +1,11 @@
-from Tesco import Tesco
-from Supervalu import Supervalu
+from stores.Tesco import Tesco
+from stores.Supervalu import Supervalu
 from Aldi import Aldi
-from Dunnes import Dunnes
+from stores.Dunnes import Dunnes
 from database import DBConnector
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
-import logging
 
 app = FastAPI()
 origins = ["*"]
