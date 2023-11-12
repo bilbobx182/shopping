@@ -1,19 +1,23 @@
+
+import multiprocessing
+import itertools
+import random
 from time import sleep
+
 from Dunnes import Dunnes
 from Tesco import Tesco
 from Aldi import Aldi
 from Supervalu import Supervalu
-import itertools
-
+from constants import WAIT_TIME
 from generate_ranks import Ranks
-import multiprocessing
 from common import round_up
+
 
 shops = {
     'Aldi': 0,
     'Tesco': 0,
-    'SuperValu':  0,
-    'dunnes':  0,
+    'SuperValu': 0,
+    'dunnes': 0,
 }
 
 dunnes = Dunnes()
@@ -22,13 +26,13 @@ aldi = Aldi()
 super = Supervalu()
 
 
-food = ["mushroom", "Onions", "Garlic", "Tomato", "Peppers",
-        "Parsnip", "Carrots", "Cheese", "Butter",
-        "Milk", "Chicken", "Salmon", "Meatballs", "Tofu", "Eggs", "Turkey", "Rice", "Potato", "Bread", "Chocolate",
-        "Cola"]
-
-
 def generate_weekly_costs(product):
+    """
+    - Queries all the shops for the product.
+    - Combines data for all.
+    - Generates ranks and gets the prices.
+    """
+    sleep(random.randint(int(WAIT_TIME / 2), WAIT_TIME))
     aldi_prod = aldi.search_product(product)
     super_prod = super.search_product(product)
     dunnes_products = dunnes.search_product(product)
@@ -38,7 +42,6 @@ def generate_weekly_costs(product):
         combined = [*[food.dict() for food in aldi_prod], *[food.dict() for food in dunnes_products],
                     *[food.dict() for food in tesco_prod], *[food.dict() for food in super_prod]]
         ranks = Ranks(combined)
-        sleep(10)
         return ranks.get_prices()
 
     except Exception as e:
@@ -47,6 +50,11 @@ def generate_weekly_costs(product):
 
 def main():
     prices = []
+    food = ["mushroom", "Onions", "Garlic", "Tomato", "Peppers", "orange", "apple", "kiwi",
+            "Parsnip", "Carrots", "Cheese", "Butter",
+            "Milk", "Chicken", "Salmon", "Meatballs", "Tofu", "Eggs", "Turkey", "Rice", "Potato", "Bread", "Chocolate",
+            "Cola"]
+
     num_processes = multiprocessing.cpu_count()
     with multiprocessing.Pool(processes=num_processes) as pool:
         prices.extend(pool.map(generate_weekly_costs, food))
@@ -55,9 +63,31 @@ def main():
 
     for item in prices:
         shops[item['company']] = round_up(shops[item['company']] + item['price'])
+    print(shops)
 
+
+def debug_weekly():
+    """
+    Method to debug weekly costs.
+    """
+    debug_cost = []
+    # Smaller subset of all the foods
+    food = ["Rice", "Potato", "Bread", "Chocolate","Cola","Cheese"]
+
+    for item in food:
+        debug_cost.extend(generate_weekly_costs(item))
+
+    debug_cost = list(itertools.chain.from_iterable(debug_cost))
+    for item in debug_cost:
+        shops[item['company']] = round_up(shops[item['company']] + item['price'])
     print(shops)
 
 
 if __name__ == '__main__':
-    main()
+    debug = False
+    if debug:
+        # Debugging multi-process can be a pain, this makes it easier.
+        debug_weekly()
+    else:
+        main()
+

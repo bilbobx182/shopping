@@ -35,8 +35,8 @@ class Dunnes():
             'company': "dunnes",
             'category': product,
             'product': standardise(cleaned[0]),
-            'price': round_up(cleaned[1]),
-            'unit_price': round_up(cleaned[2]),
+            'price': cleaned[1],
+            'unit_price': cleaned[2],
             'url': url
         }
 
