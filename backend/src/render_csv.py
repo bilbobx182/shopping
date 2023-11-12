@@ -6,7 +6,8 @@ from Dunnes import Dunnes
 from Tesco import Tesco
 from Aldi import Aldi
 from Supervalu import Supervalu
-from common import stats, FOOD_GROUPS
+from common import stats
+from constants import FOOD_GROUPS
 import multiprocessing
 
 dunnes = Dunnes()
@@ -25,6 +26,7 @@ FILENAME = f"{now}_shopping.csv"
 
 jobs = []
 
+# Needs fixing up.
 
 def render_data(catagory):
     file = open(FILENAME, 'a')

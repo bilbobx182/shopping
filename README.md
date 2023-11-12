@@ -99,11 +99,13 @@ ALTER TABLE historical_prices ADD UNIQUE(url);
 - [x] Support price per unit for all stores.
 - [x] MultiProcessing supported to make things faster.
 - [x] Hyperlink URLs.
-
+- [x] Establish base list of requirements for a week.
+- [x] Weekly price seeding.
+- 
 ## Things I'd like to do !
 
-- [ ] Establish base list of requirements for a week.
-- [ ] Weekly price seeding.
+
+
 - [ ] What are each company promoting specials on.
 - 
 [//]: # (- [ ] Add image rendering to frontend.)

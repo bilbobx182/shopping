@@ -6,8 +6,6 @@ from statistics import median, mode, mean
 import math
 
 
-
-
 def split_at_letters(data):
     match = re.search(r'[a-zA-Z]', data)
     if match:
@@ -69,6 +67,7 @@ def replace_ownbrand(data, brand):
 
 def round_up(number):
     return math.ceil(number * 100) / 100
+
 
 def remove_currency(data):
     return data.replace('€', "")

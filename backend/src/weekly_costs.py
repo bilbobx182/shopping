@@ -1,4 +1,3 @@
-
 import multiprocessing
 import itertools
 import random
@@ -8,16 +7,15 @@ from Dunnes import Dunnes
 from Tesco import Tesco
 from Aldi import Aldi
 from Supervalu import Supervalu
-from constants import WAIT_TIME
+from constants import WAIT_TIME, SUPERVALU, DUNNES, ALDI, TESCO
 from generate_ranks import Ranks
 from common import round_up
 
-
 shops = {
-    'Aldi': 0,
-    'Tesco': 0,
-    'SuperValu': 0,
-    'dunnes': 0,
+    ALDI: 0,
+    TESCO: 0,
+    DUNNES: 0,
+    SUPERVALU: 0,
 }
 
 dunnes = Dunnes()
@@ -72,7 +70,7 @@ def debug_weekly():
     """
     debug_cost = []
     # Smaller subset of all the foods
-    food = ["Rice", "Potato", "Bread", "Chocolate","Cola","Cheese"]
+    food = ["Rice", "Potato", "Bread", "Chocolate", "Cola", "Cheese"]
 
     for item in food:
         debug_cost.extend(generate_weekly_costs(item))
@@ -90,4 +88,3 @@ if __name__ == '__main__':
         debug_weekly()
     else:
         main()
-

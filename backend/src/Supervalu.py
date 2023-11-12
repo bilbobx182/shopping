@@ -1,35 +1,37 @@
-from common import  standardise, remove_string_from_number, replace_ownbrand, round_up
+from common import standardise, remove_string_from_number, replace_ownbrand, round_up
 
+from constants import SUPERVALU
 from FoodModel import Food
 import requests
 
 
+def format_dict(product, item):
+
+    try:
+        if "€" in item['pricePerUnit']:
+            unit = remove_string_from_number(item['pricePerUnit'].replace("€", "").split("/")[0])
+        else:
+            unit = remove_string_from_number(item['pricePerUnit'])
+    except KeyError:
+        # Some items don't have unit prices
+        unit = item['priceNumeric']
+    except Exception as e:
+        unit = item['priceNumeric']
+
+    clean = standardise(item['name'])
+    return {
+        'company': SUPERVALU,
+        'category': product,
+        'product': replace_ownbrand(clean, SUPERVALU.lower()),
+        'price': round_up(item['priceNumeric']),
+        'unit_price': round_up(unit),
+        'url': f"https://shop.supervalu.ie/sm/delivery/rsid/5550/product/{item['name']}"
+    }
+
+
 class Supervalu():
 
-    def format_dict(self, product, item):
-
-        try:
-            if "€" in item['pricePerUnit']:
-                unit = remove_string_from_number(item['pricePerUnit'].replace("€","").split("/")[0])
-            else:
-                unit = remove_string_from_number(item['pricePerUnit'])
-        except KeyError:
-            # Some items don't have unit prices
-            unit = item['priceNumeric']
-        except Exception as e:
-            unit = item['priceNumeric']
-
-        clean = standardise(item['name'])
-        return {
-            'company': "SuperValu",
-            'category': product,
-            'product': replace_ownbrand(clean,'supervalu'),
-            'price': round_up(item['priceNumeric']),
-            'unit_price': round_up(unit) ,
-            'url': f"https://shop.supervalu.ie/sm/delivery/rsid/5550/product/{item['name']}"
-        }
-
-    def perform_preview_request(self,product):
+    def perform_preview_request(self, product):
 
         headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/119.0',
@@ -59,7 +61,7 @@ class Supervalu():
         resp = response.json()
         return resp['products']
 
-    def perform_request(self,product,super_data,page=1,count=0, endpoint = "/api/stores/5550/search"):
+    def perform_request(self, product, super_data, page=1, count=0, endpoint="/api/stores/5550/search"):
         """
         Recursive pagination of the data
         """
@@ -90,7 +92,7 @@ class Supervalu():
         }
 
         resp = requests.get(f'https://storefrontgateway.supervalu.ie{endpoint}', params=params,
-                                headers=headers)
+                            headers=headers)
 
         # Something bad happened, abort with the data we have.
         if resp.status_code > 299:
@@ -107,15 +109,16 @@ class Supervalu():
         super_data.extend(resp['items'])
 
         try:
-            if resp_count >= resp['total'] :
+            if resp_count >= resp['total']:
                 return super_data
         except KeyError:
             return super_data
 
         # Recurse otherwise
-        self.perform_request(product, super_data, page+1, resp_count)
+        self.perform_request(product, super_data, page + 1, resp_count)
 
         return super_data
+
     def search_product(self, product):
         """
         Searches for product.
@@ -123,9 +126,9 @@ class Supervalu():
         is_csv: True, as when I run locally, I want to see it in terminal.
         """
         resp = []
-        for item in self.perform_request(product,[]):
+        for item in self.perform_request(product, []):
             try:
-                resp.append(Food(**self.format_dict(product, item)))
+                resp.append(Food(**format_dict(product, item)))
             except AttributeError as e:
                 continue
             except IndexError as e:

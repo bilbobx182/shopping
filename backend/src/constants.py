@@ -7,7 +7,6 @@ today = date.today()
 # dd/mm/YY
 DATE = today.strftime("%Y-%m-%d")
 
-
 GOOD = ['carrots', 'brocolli', 'parsnip', 'peas', 'soup', 'salad',
         'coriander', 'orange', 'apple', 'pear', 'onions', 'pineapple', 'pepper',
         'cucumber', 'aubergine', 'tomato', 'banana', 'grape', 'cherry', 'strawberry']
@@ -18,3 +17,8 @@ FATS = ['butter', 'mayo', 'olive oil', 'pate']
 BAD = ['chocolate', 'crisps', 'cola', 'fanta', 'monster', 'redbull', 'muffins', 'biscuits', 'cakes']
 
 FOOD_GROUPS = [GOOD, CARBS, DAIRY, PROTEIN, FATS, BAD]
+
+ALDI = "Aldi"
+DUNNES = "Dunnes"
+TESCO = "Tesco"
+SUPERVALU = "SuperValu"

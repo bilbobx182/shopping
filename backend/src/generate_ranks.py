@@ -2,12 +2,13 @@ from common import round_up
 from collections import defaultdict
 from statistics import median
 
+
 class Ranks:
     shops = ['Aldi', 'Tesco', 'SuperValu', 'dunnes']
     df = None
     median_prices = None
 
-    def __init__(self, data,):
+    def __init__(self, data, ):
         """
         Set the data on init.
         """
@@ -25,7 +26,8 @@ class Ranks:
             median_price = median(prices)
             # Scale the ranks to 1-10
             rank = 10 - (median_price / max(prices)) * 9
-            self.ranked_results.append({'company': key[0], 'price':median_price, 'category': key[1], 'median': median_price, 'rank': rank})
+            self.ranked_results.append(
+                {'company': key[0], 'price': median_price, 'category': key[1], 'median': median_price, 'rank': rank})
 
         # Sort the results by rank
         self.ranked_results.sort(key=lambda x: x['rank'], reverse=True)

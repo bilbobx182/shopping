@@ -1,12 +1,12 @@
 import json
-from common import standardise, replace_ownbrand,round_up
+from common import standardise, replace_ownbrand, round_up
+from constants import ALDI
 from FoodModel import Food
 
 import requests
 
 
 class Aldi:
-
     _headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:85.0) Gecko/20100101 Firefox/85.0',
         'Accept': 'application/json, text/javascript, */*; q=0.01',
@@ -20,17 +20,19 @@ class Aldi:
         'TE': 'Trailers',
     }
 
+    _own_brands = ['clonbawn', "healys farm",
+                   "ballymore crust",
+                   "healys",
+                   "egans", "kavanaghs",
+                   "harvest morn", "natures pick"]
+
     _params = (
         ('limit', '200'),
     )
 
     def remove_ownbrand(self, aldi_product):
         # Aldi actually rename too many things, this isn't really possible to do
-        for ownbrand in ['clonbawn', "healys farm",
-                         "ballymore crust",
-                         "healys",
-                         "egans", "kavanaghs",
-                         "harvest morn", "natures pick"]:
+        for ownbrand in self._own_brands:
             if ownbrand in aldi_product:
                 aldi_product = replace_ownbrand(aldi_product, ownbrand)
         return aldi_product
@@ -49,19 +51,18 @@ class Aldi:
         resp = []
 
         for item in response.json()['Suggestions']:
-
             aldi_product = standardise(item['DisplayName'])
             aldi_product = self.remove_ownbrand(aldi_product)
 
             price = float(item['ListPrice'])
-            price_per_unit = float(item['UnitPrice'].replace("€",""))
-            data= {
-                "company": "Aldi",
+            price_per_unit = float(item['UnitPrice'].replace("€", ""))
+            data = {
+                "company": ALDI,
                 "category": product,
                 "product": aldi_product,
                 "price": round_up(price),
-                "unit_price":round_up(price_per_unit),
-                "url" : f"https://groceries.aldi.ie{item['Url']}",
-                }
+                "unit_price": round_up(price_per_unit),
+                "url": f"https://groceries.aldi.ie{item['Url']}",
+            }
             resp.append(Food(**data))
         return resp
