@@ -1,4 +1,4 @@
-from common import perform_request_tesco, standardise, replace_ownbrand, \
+from common import perform_request_with_agent, standardise, replace_ownbrand, \
     reg_replace, remove_string_from_number, remove_currency, replace_if, round_up
 
 from constants import TESCO
@@ -73,7 +73,7 @@ class Tesco():
             'query': product,
             'icid': 'tescohp_sws-1_m-sug_in-cola_out-cola',
         }
-        soup = perform_request_tesco('https://www.tesco.ie/groceries/en-IE/search', params)
+        soup = perform_request_with_agent('https://www.tesco.ie/groceries/en-IE/search', params)
         for row in soup.find_all("li", {"class": "product-list--list-item"}):
             raw_html = row.next_element.next_element.text.lower()
 

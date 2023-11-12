@@ -1,14 +1,14 @@
 from common import round_up
+from constants import ALDI, SUPERVALU, TESCO, DUNNES
 from collections import defaultdict
 from statistics import median
 
 
 class Ranks:
-    shops = ['Aldi', 'Tesco', 'SuperValu', 'dunnes']
-    df = None
+    shops = [ALDI, TESCO, SUPERVALU, DUNNES]
     median_prices = None
 
-    def __init__(self, data, ):
+    def __init__(self, data):
         """
         Set the data on init.
         """

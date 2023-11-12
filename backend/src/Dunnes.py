@@ -1,4 +1,4 @@
-from common import replace_ownbrand, remove_currency, perform_request_tesco, \
+from common import replace_ownbrand, remove_currency, perform_request_with_agent, \
     reg_replace, remove_string_from_number, standardise, replace_if, round_up
 
 from constants import DUNNES
@@ -52,7 +52,7 @@ class Dunnes():
         resp = []
 
         url = f"https://www.dunnesstoresgrocery.com/sm/delivery/rsid/258/results"
-        soup = perform_request_tesco(url, {'q': product})
+        soup = perform_request_with_agent(url, {'q': product})
         for row in soup.find_all("div", {"class": "ColListing--1fk1zey liggLx"}):
             try:
                 url = row.find_all('a', href=True)[0].attrs['href']

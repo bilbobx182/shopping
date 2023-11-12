@@ -114,7 +114,7 @@ def perform_request(url):
     return BeautifulSoup(resp.content, "html.parser")
 
 
-def perform_request_tesco(url, param):
+def perform_request_with_agent(url, param):
     # For now, seperate, we can fixup later
     agent = f"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/{random.randint(5, 500)}.{random.randint(5, 100)} (KHTML, like Gecko) Chrome/{random.randint(100, 120)}.0.{random.randint(5, 5000)}.{random.randint(100, 120)} Safari/{random.randint(100, 520)}.{random.randint(1, 120)}"
 
